@@ -1,9 +1,77 @@
 "use client";
+
 import Link from "next/link";
 import { Menu, X } from "lucide-react";
 import { useState } from "react";
+
+import styles from "@/components/brand/marketing.module.css";
 import { BrandMark } from "@/components/shell/brand-mark";
 import { WalletPreviewDialog } from "@/components/shell/wallet-preview-dialog";
 import { Container } from "@/components/ui/container";
-const links = [["/how-it-works", "How it works"], ["/explore", "Explore"], ["/for-issuers", "For issuers"], ["/for-liquidity-providers", "For liquidity providers"], ["/risk-and-methodology", "Risk & methodology"]] as const;
-export function MarketingHeader() { const [open, setOpen] = useState(false); return <header className="border-b border-[var(--line)] bg-white"><Container className="flex min-h-20 items-center justify-between gap-6"><BrandMark /><nav className="hidden items-center gap-6 text-sm font-medium lg:flex" aria-label="Main navigation">{links.map(([href, label]) => <Link key={href} href={href} className="hover:underline">{label}</Link>)}</nav><div className="flex items-center gap-2"><WalletPreviewDialog className="hidden sm:inline-flex" /><button className="inline-flex min-h-11 min-w-11 items-center justify-center rounded-control border border-[var(--ink)] lg:hidden" onClick={() => setOpen(true)} aria-label="Open navigation menu"><Menu size={18} /></button></div></Container>{open && <div className="fixed inset-0 z-40 lg:hidden"><button className="absolute inset-0 bg-[rgba(16,16,16,.55)]" onClick={() => setOpen(false)} aria-label="Close navigation menu" /><aside className="absolute right-0 top-0 h-full w-[min(86vw,360px)] bg-white p-6 shadow-[-8px_0_0_var(--ink)]"><div className="flex items-center justify-between"><span className="eyebrow text-[var(--muted)]">Nostos menu</span><button className="inline-flex min-h-11 min-w-11 items-center justify-center rounded-control border border-[var(--line)]" onClick={() => setOpen(false)} aria-label="Close navigation menu"><X size={18} /></button></div><nav className="mt-10 flex flex-col gap-2" aria-label="Mobile main navigation">{links.map(([href, label]) => <Link key={href} href={href} onClick={() => setOpen(false)} className="flex min-h-12 items-center border-b border-[var(--line)] text-lg font-semibold">{label}</Link>)}</nav><div className="mt-8"><WalletPreviewDialog className="w-full" /></div></aside></div>}</header>; }
+
+const links = [
+  ["/how-it-works", "How it works"],
+  ["/explore", "Explore"],
+  ["/for-issuers", "For issuers"],
+  ["/for-liquidity-providers", "For liquidity providers"],
+  ["/risk-and-methodology", "Risk & methodology"],
+] as const;
+
+export function MarketingHeader() {
+  const [open, setOpen] = useState(false);
+
+  return (
+    <header className={styles.marketingHeader}>
+      <Container className={styles.headerContainer}>
+        <BrandMark />
+        <nav className={styles.desktopNav} aria-label="Main navigation">
+          {links.map(([href, label]) => (
+            <Link key={href} href={href}>{label}</Link>
+          ))}
+        </nav>
+        <div className={styles.headerActions}>
+          <WalletPreviewDialog className={styles.headerWallet} triggerVariant="header" />
+          <button
+            type="button"
+            className={styles.menuButton}
+            onClick={() => setOpen(true)}
+            aria-label="Open navigation menu"
+            aria-expanded={open}
+          >
+            <Menu size={18} />
+          </button>
+        </div>
+      </Container>
+
+      {open ? (
+        <div className={styles.mobileMenuLayer}>
+          <button
+            type="button"
+            className={styles.mobileMenuBackdrop}
+            onClick={() => setOpen(false)}
+            aria-label="Close navigation menu"
+          />
+          <aside className={styles.mobileMenuPanel} aria-label="Mobile menu">
+            <div className={styles.mobileMenuTopline}>
+              <span className="eyebrow text-[var(--muted-foreground)]">Nostos menu</span>
+              <button
+                type="button"
+                className={styles.menuButton}
+                onClick={() => setOpen(false)}
+                aria-label="Close navigation menu"
+              >
+                <X size={18} />
+              </button>
+            </div>
+            <nav className={styles.mobileNav} aria-label="Mobile main navigation">
+              {links.map(([href, label]) => (
+                <Link key={href} href={href} onClick={() => setOpen(false)}>{label}</Link>
+              ))}
+            </nav>
+            <WalletPreviewDialog className={styles.mobileWallet} />
+          </aside>
+        </div>
+      ) : null}
+    </header>
+  );
+}

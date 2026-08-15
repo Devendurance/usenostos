@@ -31,6 +31,17 @@ test.describe("Nostos route shells", () => {
     await expect(page.getByRole("link", { name: /return home/i })).toBeVisible();
   });
 
+  test("landing hero keeps the prototype hierarchy and CTA destinations", async ({ page }) => {
+    await page.goto("/");
+    await expect(page.getByRole("heading", { level: 1, name: /Capital on its way home/i })).toBeVisible();
+    await expect(page.getByTestId("hero-flow-scene")).toBeVisible();
+    await expect(page.getByRole("navigation", { name: "Main navigation" }).getByRole("link", { name: "Explore" })).toHaveAttribute("href", "/explore");
+    await expect(page.getByRole("button", { name: /connect wallet/i }).first()).toBeVisible();
+    await expect(page.getByTestId("hero-primary-cta")).toHaveAttribute("href", "/explore");
+    await expect(page.getByRole("link", { name: /How the exit works/i })).toHaveAttribute("href", "/how-it-works");
+    await expect(page.getByTestId("hero-flow-scene")).not.toContainText(/0x|USDT|APY|tx/i);
+  });
+
   test("wallet preview traps focus and keeps provider actions unavailable", async ({ page }) => {
     await page.goto("/explore");
     await page.getByRole("button", { name: /connect wallet/i }).first().press("Enter");
@@ -39,6 +50,16 @@ test.describe("Nostos route shells", () => {
     await expect(page.getByRole("dialog")).toContainText(/not available in this UI phase/i);
     await page.keyboard.press("Escape");
     await expect(page.getByRole("dialog")).toBeHidden();
+  });
+
+  test("marketing mobile drawer exposes all primary destinations", async ({ page }) => {
+    await page.setViewportSize({ width: 375, height: 812 });
+    await page.goto("/");
+    await page.getByRole("button", { name: /open navigation menu/i }).click();
+    await expect(page.getByRole("navigation", { name: /mobile main navigation/i })).toBeVisible();
+    await expect(page.getByRole("navigation", { name: /mobile main navigation/i }).getByRole("link", { name: /Explore/i })).toBeVisible();
+    await page.getByRole("complementary", { name: /mobile menu/i }).getByRole("button", { name: /close navigation menu/i }).click();
+    await expect(page.getByRole("navigation", { name: /mobile main navigation/i })).toBeHidden();
   });
 
   test("explorer filters are local controls with no fabricated rows", async ({ page }) => {
@@ -50,7 +71,7 @@ test.describe("Nostos route shells", () => {
 });
 
 test.describe("Nostos responsive shell", () => {
-  for (const width of [375, 768, 1440]) {
+  for (const width of [375, 768, 1024, 1440]) {
     test(`does not overflow at ${width}px`, async ({ page }) => {
       await page.setViewportSize({ width, height: 900 });
       await page.goto("/");
