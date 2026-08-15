@@ -1,11 +1,13 @@
 # Left Off
 
 ## Current Task
-Verify and commit the agent state workflow for cross-session handoffs.
+Agent state workflow setup is complete.
 
 ## Completed In This Session
 - Created the three `.agent-state/` snapshots.
 - Added the state lifecycle instructions to `AGENTS.md`.
+- Verified the project with `npm run lint` and `npm run build`.
+- Committed the three state snapshots in `818e211`.
 
 ## Files Involved
 - `.agent-state/project-state.md`
@@ -23,4 +25,4 @@ Verify and commit the agent state workflow for cross-session handoffs.
 - Existing unrelated worktree changes remain unstaged.
 
 ## Next Action
-Inspect the Git scope, commit only `.agent-state/`, and leave existing unrelated changes unstaged.
+At the beginning of the next session, read all three `.agent-state/` files before changing the application, then update `left-off.md` with the next active task.
