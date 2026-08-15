@@ -12,7 +12,7 @@ Run the official generator through npm's `npx` command:
 npx create-next-app@latest . --use-npm --yes
 ```
 
-The generator's recommended defaults provide TypeScript, ESLint, Tailwind CSS, the App Router, Turbopack, the `src/` directory, the `@/*` import alias, and the current Next.js agent guidance file.
+The generator's recommended defaults provide TypeScript, ESLint, Tailwind CSS, the App Router, Turbopack, the root `app/` directory, the `@/*` import alias, and the current Next.js agent guidance file. The `src/` directory is optional and is not enabled by this command.
 
 ## Constraints
 

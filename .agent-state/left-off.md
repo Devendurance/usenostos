@@ -1,28 +1,32 @@
 # Left Off
 
 ## Current Task
-Agent state workflow setup is complete.
+Complete the approved Nostos Full Frontend UI/UX implementation and verification.
 
 ## Completed In This Session
-- Created the three `.agent-state/` snapshots.
-- Added the state lifecycle instructions to `AGENTS.md`.
-- Verified the project with `npm run lint` and `npm run build`.
-- Committed the three state snapshots in `818e211`.
+- Replaced the starter UI with the Nostos dual marketing/product shell and all approved routes.
+- Added local General Sans typography, semantic design tokens, responsive layouts, reusable primitives, and the shared wallet preview dialog.
+- Added truthful unavailable/empty states throughout product surfaces; no fabricated vaults, balances, charts, transactions, or connected-wallet states.
+- Added Playwright route, dialog, zero-data, and responsive smoke coverage.
+- Updated README, package scripts, and build configuration for the completed frontend.
 
 ## Files Involved
-- `.agent-state/project-state.md`
-- `.agent-state/memory.md`
-- `.agent-state/left-off.md`
-- `AGENTS.md`
+- `app/`, `components/`, `lib/`, `public/fonts/`
+- `tests/e2e/nostos.spec.ts`, `playwright.config.ts`
+- `package.json`, `package-lock.json`, `next.config.ts`, `eslint.config.mjs`, `README.md`
+- `.agent-state/project-state.md`, `.agent-state/left-off.md`
 
 ## Verification
-- `npm run lint`: passed.
-- `npm run build`: passed.
-- `npm test`: unavailable because no test script exists.
+- `npm run lint` passes.
+- `npx tsc --noEmit` passes.
+- `npm run build` passes using the configured two-stage Next compile/generate command.
+- `npm run test:e2e -- --workers=1` passes: 19 tests.
+- `git diff --check` reports no whitespace errors.
+- Browser visual audit at desktop landing viewport confirmed readable primary CTA after fixing Tailwind white/black token cascade; temporary screenshot removed.
 
 ## Blockers
-- None for the state workflow.
-- Existing unrelated worktree changes remain unstaged.
+- Existing unrelated documentation changes remain unstaged and must be preserved.
+- No live wallet, contract, API, or data adapters are in scope; all product data surfaces must remain truthful unavailable/empty states.
 
 ## Next Action
-At the beginning of the next session, read all three `.agent-state/` files before changing the application, then update `left-off.md` with the next active task.
+Hand off the completed UI for visual review and later wallet/data integration. Keep all production data adapters disabled until the integration phase.

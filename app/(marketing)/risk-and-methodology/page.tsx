@@ -43,7 +43,7 @@ export default function RiskAndMethodologyPage() {
               {visible.map((item) => <li key={item} className="border-b border-[var(--line)] py-5 text-sm leading-6">{item}</li>)}
             </ul>
           </div>
-          <div className="rounded-[var(--radius-card)] bg-[#f7f5f1] p-7 sm:p-10">
+          <div className="rounded-card bg-[#f7f5f1] p-7 sm:p-10">
             <SectionHeading eyebrow="What Nostos does not guarantee" title="Visibility is not certainty." />
             <ul className="mt-10 border-t border-[var(--ink)]">
               {notGuaranteed.map((item) => <li key={item} className="border-b border-[var(--line)] py-5 text-sm leading-6 text-[var(--muted)]">{item}</li>)}
@@ -64,7 +64,7 @@ export default function RiskAndMethodologyPage() {
               { title: "Claimable", text: "Settlement is available and the user can take the stated next action." },
               { title: "Claimed", text: "The claim action has completed and its transaction or receipt can be inspected." },
             ].map((state) => (
-              <article key={state.title} className="rounded-[var(--radius-card)] border border-[var(--ink)] bg-white p-6">
+              <article key={state.title} className="rounded-card border border-[var(--ink)] bg-white p-6">
                 <p className="eyebrow">Settlement state</p>
                 <h3 className="display mt-10 text-2xl font-bold tracking-[-.03em]">{state.title}</h3>
                 <p className="mt-4 text-sm leading-6 text-[var(--muted)]">{state.text}</p>

@@ -32,7 +32,7 @@ export function AudienceGrid() {
         <SectionHeading eyebrow="Built for every side of settlement" title="One clear record. Different reasons to rely on it." />
         <div className="mt-12 grid gap-5 lg:grid-cols-3">
           {audiences.map((audience) => (
-            <article key={audience.label} className="flex min-h-96 flex-col rounded-[var(--radius-card)] border border-[var(--ink)] p-7">
+            <article key={audience.label} className="flex min-h-96 flex-col rounded-card border border-[var(--ink)] p-7">
               <p className="eyebrow text-[var(--muted)]">{audience.label}</p>
               <h3 className="display mt-10 text-3xl font-bold leading-[1.05] tracking-[-.04em]">{audience.title}</h3>
               <p className="mt-5 text-sm leading-6 text-[var(--muted)]">{audience.text}</p>

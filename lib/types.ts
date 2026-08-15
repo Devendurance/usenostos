@@ -1,0 +1,2 @@
+export type UnavailableReason = "wallet-disconnected" | "integration-pending" | "unsupported-network" | "vault-unavailable" | "no-position" | "no-liquidity" | "quote-expired" | "record-not-found";
+export type PresentationState<T> = { status: "unavailable"; reason: UnavailableReason; title: string; message: string } | { status: "empty"; title: string; message: string } | { status: "ready"; data: T };

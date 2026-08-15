@@ -1,0 +1,2 @@
+import Link from "next/link";
+export function BrandMark({ dark = false }: { dark?: boolean }) { return <Link href="/" className={`display inline-flex items-center gap-2 text-xl font-bold tracking-[-.04em] ${dark ? "text-white" : "text-[var(--ink)]"}`} aria-label="Nostos home"><span className={`h-2.5 w-2.5 rounded-full ${dark ? "bg-[#D6E62A]" : "bg-[var(--lilac)]"}`} aria-hidden="true" />Nostos</Link>; }

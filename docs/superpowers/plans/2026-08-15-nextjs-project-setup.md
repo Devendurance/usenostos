@@ -4,7 +4,7 @@
 
 **Goal:** Scaffold a new Next.js application directly in the current working directory with the official `create-next-app` CLI.
 
-**Architecture:** Use the official generator without custom application code. The generated App Router project will use the standard `src/` layout and generator-managed configuration; no extra services or dependencies will be added.
+**Architecture:** Use the official generator without custom application code. The generated App Router project will use the standard root `app/` layout and generator-managed configuration; no extra services or dependencies will be added.
 
 **Tech Stack:** Next.js latest, TypeScript, ESLint, Tailwind CSS, App Router, Turbopack, npm via `npx`.
 
@@ -21,7 +21,7 @@
 
 **Files:**
 - Existing: `docs/superpowers/specs/2026-08-15-nextjs-project-setup-design.md`
-- Create: `package.json`, `package-lock.json`, `next.config.ts`, `tsconfig.json`, `src/`, `public/`, and the remaining files produced by `create-next-app`
+- Create: `package.json`, `package-lock.json`, `next.config.ts`, `tsconfig.json`, `app/`, `public/`, and the remaining files produced by `create-next-app`
 - Verify: generated npm scripts and Next.js project build
 
 **Interfaces:**
@@ -53,7 +53,7 @@ Read `package.json` and confirm it contains the generated Next.js scripts, inclu
 }
 ```
 
-Confirm the project contains `src/app/layout.tsx`, `src/app/page.tsx`, and `src/app/globals.css`.
+Confirm the project contains `app/layout.tsx`, `app/page.tsx`, and `app/globals.css`.
 
 - [ ] **Step 3: Run the generated lint check**
 

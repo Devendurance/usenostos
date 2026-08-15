@@ -34,7 +34,7 @@ export default function ForIssuersPage() {
             title="Credibility is tested at redemption."
             description="The challenge is not simply offering a tokenized asset. It is maintaining user confidence when the real-world settlement process takes time."
           />
-          <div className="rounded-[var(--radius-card)] bg-[var(--blue)] p-7 sm:p-10">
+          <div className="rounded-card bg-[var(--blue)] p-7 sm:p-10">
             <p className="eyebrow">What users need to believe</p>
             <ul className="display mt-9 space-y-5 text-2xl font-bold leading-tight tracking-[-.03em]">
               <li>The queue is understandable.</li>

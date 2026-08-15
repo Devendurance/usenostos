@@ -5,7 +5,7 @@ import { SlidersHorizontal } from "lucide-react";
 import { EmptyState } from "@/components/ui/empty-state";
 
 const categories = ["All", "Treasuries", "Private Credit", "Commodities", "Real Estate"] as const;
-const sorts = ["Settlement time", "Net APY", "Safety score", "Liquidity depth"] as const;
+const sorts = ["Settlement time", "Net APY", "Liquidity depth"] as const;
 
 export function ExplorerControls() {
   const [category, setCategory] = useState<(typeof categories)[number]>("All");
@@ -20,7 +20,7 @@ export function ExplorerControls() {
             {categories.map((item) => <button key={item} type="button" aria-pressed={category === item} onClick={() => setCategory(item)} className={`min-h-11 rounded-full border px-4 text-sm font-semibold transition-colors ${category === item ? "border-[var(--ink)] bg-[var(--ink)] text-white" : "border-[var(--line-strong)] bg-white hover:border-[var(--ink)]"}`}>{item}</button>)}
           </div>
         </fieldset>
-        <label className="flex min-w-56 flex-col gap-2 text-sm font-semibold">Sort by<select value={sort} onChange={(event) => setSort(event.target.value as (typeof sorts)[number])} className="min-h-12 rounded-[var(--radius-control)] border border-[var(--ink)] bg-white px-4 text-sm focus-visible:ring-2 focus-visible:ring-[var(--lilac)]">{sorts.map((item) => <option key={item}>{item}</option>)}</select></label>
+        <label className="flex min-w-56 flex-col gap-2 text-sm font-semibold">Sort by<select value={sort} onChange={(event) => setSort(event.target.value as (typeof sorts)[number])} className="min-h-12 rounded-control border border-[var(--ink)] bg-white px-4 text-sm focus-visible:ring-2 focus-visible:ring-[var(--lilac)]">{sorts.map((item) => <option key={item}>{item}</option>)}</select></label>
       </div>
       <div className="pt-6" aria-live="polite">
         <p className="mb-4 text-xs text-[var(--muted)]">Showing {category.toLowerCase()} · ordered by {sort.toLowerCase()}</p>

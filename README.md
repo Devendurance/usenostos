@@ -1,36 +1,34 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Nostos
 
-## Getting Started
+Nostos is the redemption and settlement layer for tokenized real-world assets. This repository currently contains the complete responsive frontend UI/UX shell for the product, built with Next.js 16 App Router, TypeScript, Tailwind CSS 4, Radix Dialog, Lucide, and Playwright.
 
-First, run the development server:
+## Run locally
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Routes
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Marketing: `/`, `/how-it-works`, `/for-issuers`, `/for-liquidity-providers`, `/risk-and-methodology`.
 
-## Learn More
+Product: `/explore`, `/vaults/[address]`, `/portfolio`, `/redemptions`, `/redemptions/[requestId]`, `/pool`, `/registry`, `/receipts/[requestId]`.
 
-To learn more about Next.js, take a look at the following resources:
+## UI-only boundary
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+The current phase intentionally has no wallet provider, contract, API, indexer, or fabricated runtime data. Connect-wallet controls open an explanatory preview dialog; provider actions and transaction actions remain unavailable. Product data surfaces use truthful disconnected, empty, unavailable, and integration-pending states.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+The visual system is documented in [DESIGN.md](./DESIGN.md), and approved product copy lives in [docs/nostos-brand-messaging.md](./docs/nostos-brand-messaging.md).
 
-## Deploy on Vercel
+## Verification
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```bash
+npm run lint
+npx tsc --noEmit
+npm run build
+npx playwright install chromium
+npm run test:e2e
+```

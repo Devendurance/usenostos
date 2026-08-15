@@ -1,0 +1,61 @@
+import { expect, test } from "@playwright/test";
+
+const routes = [
+  "/",
+  "/how-it-works",
+  "/for-issuers",
+  "/for-liquidity-providers",
+  "/risk-and-methodology",
+  "/explore",
+  "/portfolio",
+  "/redemptions",
+  "/pool",
+  "/registry",
+  "/vaults/0x0000000000000000000000000000000000000000",
+  "/redemptions/1",
+  "/receipts/1",
+];
+
+test.describe("Nostos route shells", () => {
+  for (const route of routes) {
+    test(`${route} renders a named main landmark`, async ({ page }) => {
+      await page.goto(route);
+      await expect(page.locator("main")).toBeVisible();
+      await expect(page.locator("h1").first()).toBeVisible();
+    });
+  }
+
+  test("malformed vault paths render the branded 404", async ({ page }) => {
+    await page.goto("/vaults/not-an-address");
+    await expect(page.getByRole("heading", { name: /not on the map/i })).toBeVisible();
+    await expect(page.getByRole("link", { name: /return home/i })).toBeVisible();
+  });
+
+  test("wallet preview traps focus and keeps provider actions unavailable", async ({ page }) => {
+    await page.goto("/explore");
+    await page.getByRole("button", { name: /connect wallet/i }).first().press("Enter");
+    await expect(page.getByRole("dialog")).toBeVisible();
+    await expect(page.getByRole("dialog").getByRole("button", { name: "MetaMask" })).toBeDisabled();
+    await expect(page.getByRole("dialog")).toContainText(/not available in this UI phase/i);
+    await page.keyboard.press("Escape");
+    await expect(page.getByRole("dialog")).toBeHidden();
+  });
+
+  test("explorer filters are local controls with no fabricated rows", async ({ page }) => {
+    await page.goto("/explore");
+    await page.getByRole("button", { name: /private credit/i }).click();
+    await expect(page.getByText(/vault data is not connected/i)).toBeVisible();
+    await expect(page.locator("tbody tr")).toHaveCount(0);
+  });
+});
+
+test.describe("Nostos responsive shell", () => {
+  for (const width of [375, 768, 1440]) {
+    test(`does not overflow at ${width}px`, async ({ page }) => {
+      await page.setViewportSize({ width, height: 900 });
+      await page.goto("/");
+      const overflow = await page.evaluate(() => document.documentElement.scrollWidth - window.innerWidth);
+      expect(overflow).toBeLessThanOrEqual(0);
+    });
+  }
+});

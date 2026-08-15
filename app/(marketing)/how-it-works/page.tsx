@@ -48,12 +48,12 @@ export default function HowItWorksPage() {
             description="Standard settlement preserves the full eligible amount after the underlying process completes. Instant cashout lets an eligible pending claim be sold at a disclosed discount when a prefunded pool has capacity."
           />
           <div className="mt-12 grid gap-5 lg:grid-cols-2">
-            <article className="rounded-[var(--radius-card)] border border-white/25 bg-white p-7 text-[var(--ink)]">
+            <article className="rounded-card border border-white/25 bg-white p-7 text-[var(--ink)]">
               <p className="eyebrow text-[var(--muted)]">Standard settlement</p>
               <h3 className="display mt-8 text-3xl font-bold tracking-[-.04em]">Keep the claim. Track the wait.</h3>
               <p className="mt-4 max-w-lg text-sm leading-6 text-[var(--muted)]">Receive the eligible amount after the underlying settlement completes. The estimate remains visible throughout the queue.</p>
             </article>
-            <article className="rounded-[var(--radius-card)] border border-white/25 bg-[var(--sticky-yellow)] p-7 text-[var(--ink)]">
+            <article className="rounded-card border border-white/25 bg-[var(--sticky-yellow)] p-7 text-[var(--ink)]">
               <p className="eyebrow">Instant cashout</p>
               <h3 className="display mt-8 text-3xl font-bold tracking-[-.04em]">Transfer the claim. See the cost first.</h3>
               <p className="mt-4 max-w-lg text-sm leading-6 text-black/70">Sell the pending claim to available liquidity. The gross amount, discount and net amount are shown before confirmation.</p>
