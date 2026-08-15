@@ -37,7 +37,7 @@ export function ObjectionFaq() {
                 {item.question}
                 <span className="text-2xl font-normal transition-transform group-open:rotate-45" aria-hidden="true">+</span>
               </summary>
-              <p className="max-w-2xl pb-6 pr-10 text-sm leading-7 text-[var(--muted)]">{item.answer}</p>
+              <p className="max-w-2xl pb-6 pr-10 text-sm leading-7 text-muted-foreground">{item.answer}</p>
             </details>
           ))}
         </div>

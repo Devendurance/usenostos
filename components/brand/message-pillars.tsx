@@ -43,11 +43,11 @@ export function MessagePillars() {
           {pillars.map(({ number, title, text, icon: Icon }) => (
             <article key={title} className="min-h-72 border-b border-r border-[var(--line)] p-6 lg:p-7">
               <div className="flex items-center justify-between">
-                <span className="eyebrow text-[var(--muted)]">{number}</span>
+                <span className="eyebrow text-muted-foreground">{number}</span>
                 <Icon size={21} strokeWidth={1.6} aria-hidden="true" />
               </div>
               <h3 className="display mt-20 text-2xl font-bold tracking-[-.03em]">{title}</h3>
-              <p className="mt-4 text-sm leading-6 text-[var(--muted)]">{text}</p>
+              <p className="mt-4 text-sm leading-6 text-muted-foreground">{text}</p>
             </article>
           ))}
         </div>

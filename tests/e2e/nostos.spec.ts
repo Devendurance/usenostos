@@ -42,6 +42,34 @@ test.describe("Nostos route shells", () => {
     await expect(page.getByTestId("hero-flow-scene")).not.toContainText(/0x|USDT|APY|tx/i);
   });
 
+  test("landing fold keeps truthful states and working CTAs", async ({ page }) => {
+    await page.goto("/");
+    await expect(page.getByRole("heading", { name: "Your redemption should not disappear." })).toBeVisible();
+    await expect(page.getByRole("heading", { name: "Track the wait. Keep the option." })).toBeVisible();
+    await expect(page.getByTestId("fold-pending").getByText("PENDING", { exact: true })).toBeVisible();
+    await expect(page.getByTestId("fold-claimable").getByText("CLAIMABLE", { exact: true })).toBeVisible();
+    await expect(page.getByTestId("fold-receipt").getByText("PUBLIC RECORD", { exact: true })).toBeVisible();
+    await expect(page.locator('img[src*="paper-curl"]')).toHaveCount(1);
+    await expect(page.locator('img[src*="pushpin"]')).toHaveCount(1);
+    await expect(page.locator('img[src*="paperclip"]')).toHaveCount(1);
+    await expect(page.getByRole("link", { name: "See how it works" })).toHaveAttribute("href", "/how-it-works");
+    await expect(page.getByTestId("final-explore-cta")).toHaveAttribute("href", "/explore");
+    await expect(page.getByTestId("final-explore-cta")).toHaveAttribute("data-variant", "hero");
+    await expect(page.locator("body")).not.toContainText(/0x|USDT|APY|tx\b/i);
+  });
+
+  test("secondary text uses a distinct readable token", async ({ page }) => {
+    await page.goto("/");
+    const tokens = await page.evaluate(() => {
+      const root = getComputedStyle(document.documentElement);
+      return {
+        surface: root.getPropertyValue("--muted").trim(),
+        foreground: root.getPropertyValue("--muted-foreground").trim(),
+      };
+    });
+    expect(tokens.surface).not.toBe(tokens.foreground);
+  });
+
   test("wallet preview traps focus and keeps provider actions unavailable", async ({ page }) => {
     await page.goto("/explore");
     await page.getByRole("button", { name: /connect wallet/i }).first().press("Enter");
@@ -79,4 +107,12 @@ test.describe("Nostos responsive shell", () => {
       expect(overflow).toBeLessThanOrEqual(0);
     });
   }
+
+  test("fold simplifies decorative notes on mobile", async ({ page }) => {
+    await page.setViewportSize({ width: 375, height: 900 });
+    await page.goto("/");
+    await expect(page.locator('[data-testid="fold-claimable"]')).toBeHidden();
+    await expect(page.locator('[data-testid="fold-pending"]')).toBeVisible();
+    await expect(page.locator('[data-testid="fold-receipt"]')).toBeVisible();
+  });
 });

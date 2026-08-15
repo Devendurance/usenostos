@@ -49,9 +49,9 @@ export default function HowItWorksPage() {
           />
           <div className="mt-12 grid gap-5 lg:grid-cols-2">
             <article className="rounded-card border border-white/25 bg-white p-7 text-[var(--ink)]">
-              <p className="eyebrow text-[var(--muted)]">Standard settlement</p>
+              <p className="eyebrow text-muted-foreground">Standard settlement</p>
               <h3 className="display mt-8 text-3xl font-bold tracking-[-.04em]">Keep the claim. Track the wait.</h3>
-              <p className="mt-4 max-w-lg text-sm leading-6 text-[var(--muted)]">Receive the eligible amount after the underlying settlement completes. The estimate remains visible throughout the queue.</p>
+              <p className="mt-4 max-w-lg text-sm leading-6 text-muted-foreground">Receive the eligible amount after the underlying settlement completes. The estimate remains visible throughout the queue.</p>
             </article>
             <article className="rounded-card border border-white/25 bg-[var(--sticky-yellow)] p-7 text-[var(--ink)]">
               <p className="eyebrow">Instant cashout</p>

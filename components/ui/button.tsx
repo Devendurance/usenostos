@@ -46,6 +46,7 @@ function Button({ className, variant = "default", size = "default", offset = fal
   return (
     <ButtonPrimitive
       data-slot="button"
+      data-variant={variant}
       className={cn(buttonVariants({ variant, size, className }), offset && "button-offset relative isolate")}
       {...props}
     />

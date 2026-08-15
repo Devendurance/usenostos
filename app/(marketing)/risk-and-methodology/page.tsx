@@ -46,7 +46,7 @@ export default function RiskAndMethodologyPage() {
           <div className="rounded-card bg-[#f7f5f1] p-7 sm:p-10">
             <SectionHeading eyebrow="What Nostos does not guarantee" title="Visibility is not certainty." />
             <ul className="mt-10 border-t border-[var(--ink)]">
-              {notGuaranteed.map((item) => <li key={item} className="border-b border-[var(--line)] py-5 text-sm leading-6 text-[var(--muted)]">{item}</li>)}
+              {notGuaranteed.map((item) => <li key={item} className="border-b border-[var(--line)] py-5 text-sm leading-6 text-muted-foreground">{item}</li>)}
             </ul>
           </div>
         </Container>
@@ -67,7 +67,7 @@ export default function RiskAndMethodologyPage() {
               <article key={state.title} className="rounded-card border border-[var(--ink)] bg-white p-6">
                 <p className="eyebrow">Settlement state</p>
                 <h3 className="display mt-10 text-2xl font-bold tracking-[-.03em]">{state.title}</h3>
-                <p className="mt-4 text-sm leading-6 text-[var(--muted)]">{state.text}</p>
+                <p className="mt-4 text-sm leading-6 text-muted-foreground">{state.text}</p>
               </article>
             ))}
           </div>
@@ -78,7 +78,7 @@ export default function RiskAndMethodologyPage() {
           <SectionHeading eyebrow="Responsibility boundaries" title="Separate the asset from the infrastructure." />
           <div className="border-t border-[var(--ink)] pt-7">
             <p className="text-pretty text-lg leading-8">Nostos provides the queue and liquidity layer. The underlying asset’s yield, eligibility and settlement remain subject to its issuer and terms.</p>
-            <p className="mt-6 text-sm leading-7 text-[var(--muted)]">Users should review issuer documentation, asset terms, eligibility requirements, contract risk and the conditions attached to any liquidity quote before taking action.</p>
+            <p className="mt-6 text-sm leading-7 text-muted-foreground">Users should review issuer documentation, asset terms, eligibility requirements, contract risk and the conditions attached to any liquidity quote before taking action.</p>
           </div>
         </Container>
       </Section>

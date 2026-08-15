@@ -13,7 +13,7 @@ export function FeatureList({ items }: { items: FeatureListItem[] }) {
         <article key={title} className="min-h-56 border-b border-r border-[var(--line)] p-6 sm:p-8">
           {Icon ? <Icon size={22} strokeWidth={1.6} aria-hidden="true" /> : null}
           <h3 className="display mt-10 text-2xl font-bold tracking-[-.03em]">{title}</h3>
-          <p className="mt-4 max-w-md text-sm leading-6 text-[var(--muted)]">{text}</p>
+          <p className="mt-4 max-w-md text-sm leading-6 text-muted-foreground">{text}</p>
         </article>
       ))}
     </div>

@@ -58,10 +58,10 @@ export default function ForIssuersPage() {
       <Section>
         <Container className="grid gap-10 lg:grid-cols-2 lg:items-center">
           <div>
-            <p className="eyebrow text-[var(--muted)]">A better redemption experience</p>
+            <p className="eyebrow text-muted-foreground">A better redemption experience</p>
             <h2 className="display mt-4 text-balance text-4xl font-bold leading-[1.02] tracking-[-.045em]">Let the record carry the authority.</h2>
           </div>
-          <p className="text-pretty text-lg leading-8 text-[var(--muted)]">Show the request ID, state transition and BOT Chain transaction. Do not ask users to rely on vague status updates or unsupported safety claims.</p>
+          <p className="text-pretty text-lg leading-8 text-muted-foreground">Show the request ID, state transition and BOT Chain transaction. Do not ask users to rely on vague status updates or unsupported safety claims.</p>
         </Container>
       </Section>
       <FinalCta

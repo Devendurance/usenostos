@@ -14,7 +14,7 @@ export function AmountForm({ purpose, assetLabel = "Asset amount", actionLabel }
         <Button type="submit" disabled className="w-full disabled:opacity-45">{actionLabel}</Button>
         <WalletPreviewDialog className="w-full" />
       </div>
-      <p className="mt-4 text-xs leading-5 text-[var(--muted)]">Entering an amount does not create an approval, quote, request, or transaction.</p>
+      <p className="mt-4 text-xs leading-5 text-muted-foreground">Entering an amount does not create an approval, quote, request, or transaction.</p>
     </form>
   );
 }

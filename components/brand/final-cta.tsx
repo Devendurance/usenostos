@@ -19,7 +19,7 @@ export function FinalCta({
           <h2 className="display mt-4 text-balance text-4xl font-bold leading-[.98] tracking-[-.045em] sm:text-5xl">{title}</h2>
           <p className="mt-5 max-w-2xl text-base leading-7 text-black/70">{description}</p>
         </div>
-        <LinkButton href="/explore" offset className="w-fit min-w-44">
+        <LinkButton href="/explore" variant="hero" size="lg" className="w-fit min-w-44" data-testid="final-explore-cta">
           Explore vaults <ArrowRight size={17} aria-hidden="true" />
         </LinkButton>
       </Container>

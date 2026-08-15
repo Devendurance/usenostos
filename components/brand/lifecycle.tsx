@@ -23,9 +23,9 @@ export function Lifecycle({ compact = false }: { compact?: boolean }) {
         <ol className={`${styles.lifecycleGrid} ${compact ? styles.lifecycleCompact : ""}`}>
           {steps.map((step, index) => (
             <li key={step.title} className="relative border-t border-[var(--ink)] pt-5">
-              <span className="eyebrow text-[var(--muted)]">0{index + 1}</span>
+              <span className="eyebrow text-muted-foreground">0{index + 1}</span>
               <h3 className="display mt-9 text-2xl font-bold tracking-[-.03em]">{step.title}</h3>
-              <p className="mt-3 text-sm leading-6 text-[var(--muted)]">{step.text}</p>
+              <p className="mt-3 text-sm leading-6 text-muted-foreground">{step.text}</p>
             </li>
           ))}
         </ol>

@@ -56,9 +56,9 @@ export default function ForLiquidityProvidersPage() {
       </Section>
       <Section>
         <Container className="max-w-4xl text-center">
-          <p className="eyebrow text-[var(--muted)]">A conditional path</p>
+          <p className="eyebrow text-muted-foreground">A conditional path</p>
           <h2 className="display mt-5 text-balance text-4xl font-bold leading-[1.02] tracking-[-.045em]">Available liquidity is an option, not a guarantee.</h2>
-          <p className="mx-auto mt-6 max-w-2xl text-pretty text-base leading-7 text-[var(--muted)]">When there is no eligible liquidity, the standard settlement path remains intact. Nostos shows that condition directly rather than implying that every request can be purchased.</p>
+          <p className="mx-auto mt-6 max-w-2xl text-pretty text-base leading-7 text-muted-foreground">When there is no eligible liquidity, the standard settlement path remains intact. Nostos shows that condition directly rather than implying that every request can be purchased.</p>
         </Container>
       </Section>
       <FinalCta
