@@ -1,0 +1,12 @@
+import type { Metadata } from "next";
+import { BarChart3, WalletCards } from "lucide-react";
+import { WalletPreviewDialog } from "@/components/shell/wallet-preview-dialog";
+import { DataPanel, Metric, ProductGrid, ProductPage, TableEmpty } from "@/components/product/product-primitives";
+import { EmptyState } from "@/components/ui/empty-state";
+import { PageHeading } from "@/components/ui/page-heading";
+
+export const metadata: Metadata = { title: "Portfolio", description: "Review Nostos vault positions, yield records, and pending redemptions." };
+
+export default function PortfolioPage() {
+  return <ProductPage><PageHeading eyebrow="Portfolio" title="Your capital, in view." description="Positions, earned yield, and pending settlement records will remain connected to the wallet that owns them." actions={<WalletPreviewDialog />} /><ProductGrid className="mt-8"><Metric label="Portfolio value" hint="Wallet disconnected" /><Metric label="Yield earned" hint="Wallet disconnected" /><Metric label="Pending redemptions" hint="Wallet disconnected" /></ProductGrid><div className="mt-6 grid gap-6 xl:grid-cols-[1.25fr_.75fr]"><DataPanel title="Active positions" description="Vault balances and current values will appear here for the connected wallet."><TableEmpty columns={["Vault", "Balance", "Current value", "Settlement path", "Action"]} title="No positions to show" message="Connect a wallet to view positions. No example balances or vault records are used in this interface." /></DataPanel><DataPanel title="Yield history" description="Historical values will be charted only after verified portfolio data is available."><div className="flex min-h-64 items-center justify-center rounded-[var(--radius-control)] border border-dashed border-[var(--line-strong)] bg-[#fbfaf8]" role="img" aria-label="Yield history chart unavailable"><div className="text-center"><BarChart3 className="mx-auto text-[var(--muted)]" aria-hidden="true" /><p className="mt-3 text-sm font-semibold">Chart unavailable</p><p className="mt-2 max-w-xs text-xs leading-5 text-[var(--muted)]">No fabricated series is displayed.</p></div></div></DataPanel></div><DataPanel className="mt-6" title="Pending redemptions" description="Follow every request from pending to claimable to claimed."><EmptyState icon={<WalletCards size={18} aria-hidden="true" />} title="No wallet-linked requests" message="Connect a wallet to view pending claims and their verified settlement state." action={<WalletPreviewDialog />} /></DataPanel></ProductPage>;
+}
