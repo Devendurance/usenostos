@@ -3,6 +3,7 @@ import localFont from "next/font/local";
 import "./globals.css";
 import { Inter } from "next/font/google";
 import { cn } from "@/lib/utils";
+import { Web3Providers } from "@/components/providers/web3-provider";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 
@@ -18,5 +19,5 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
-  return <html lang="en" className={cn("font-sans", inter.variable, generalSans.variable)}><body>{children}</body></html>;
+  return <html lang="en" className={cn("font-sans", inter.variable, generalSans.variable)}><body><Web3Providers>{children}</Web3Providers></body></html>;
 }

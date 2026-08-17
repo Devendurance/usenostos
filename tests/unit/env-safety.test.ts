@@ -65,6 +65,29 @@ describe("env and secret safety", () => {
     expect(wallet.address).toBeNull();
   });
 
+  it("keeps server-only chain modules out of client code", () => {
+    const forbidden = [
+      "builder-wallet",
+      "write-proof",
+      "write-proof-testnet",
+      "testnet-write",
+      "guards",
+    ];
+    const clientDirs = ["app", "components"];
+    const offenders: string[] = [];
+    for (const dir of clientDirs) {
+      for (const file of walk(join(process.cwd(), dir))) {
+        const content = readFileSync(file, "utf8");
+        for (const mod of forbidden) {
+          if (new RegExp(`from ["']@/lib/chain/${mod}["']`).test(content)) {
+            offenders.push(`${file} -> ${mod}`);
+          }
+        }
+      }
+    }
+    expect(offenders).toEqual([]);
+  });
+
   it("does not export the raw private key from the wallet module", async () => {
     const mod = (await import("@/lib/chain/builder-wallet")) as Record<
       string,

@@ -70,14 +70,76 @@ test.describe("Nostos route shells", () => {
     expect(tokens.surface).not.toBe(tokens.foreground);
   });
 
-  test("wallet preview traps focus and keeps provider actions unavailable", async ({ page }) => {
+  test("wallet dialog shows a truthful no-provider state without fabricated data", async ({ page }) => {
     await page.goto("/explore");
     await page.getByRole("button", { name: /connect wallet/i }).first().press("Enter");
     await expect(page.getByRole("dialog")).toBeVisible();
-    await expect(page.getByRole("dialog").getByRole("button", { name: "MetaMask" })).toBeDisabled();
-    await expect(page.getByRole("dialog")).toContainText(/not available in this UI phase/i);
+    await expect(page.getByRole("dialog")).toContainText(/no injected wallet detected/i);
+    await expect(page.getByRole("dialog")).not.toContainText(/0x[a-fA-F0-9]{40}/);
+    await expect(page.getByRole("dialog")).not.toContainText(/\d+ tBOT|\d+ USDT/);
     await page.keyboard.press("Escape");
     await expect(page.getByRole("dialog")).toBeHidden();
+  });
+
+  test("external switch to an unsupported chain blocks balances and requires BOT TESTNET", async ({ page }) => {
+    // Controllable fake EIP-1193 provider on BOT Testnet (968).
+    await page.addInitScript(() => {
+      const ADDRESS = "0x1234567890abcdef1234567890abcdef12345678";
+      let chainId = "0x3c8"; // 968
+      const listeners: Record<string, Array<(...args: unknown[]) => void>> = {};
+      const provider = {
+        get chainId() {
+          return chainId;
+        },
+        isMetaMask: true,
+        request: async ({ method, params }: { method: string; params?: unknown[] }) => {
+          if (method === "eth_chainId") return chainId;
+          if (method === "eth_requestAccounts" || method === "eth_accounts") return [ADDRESS];
+          if (method === "net_version") return String(parseInt(chainId, 16));
+          if (method === "wallet_getPermissions") return [];
+          if (method === "wallet_switchEthereumChain") {
+            const target = (params as Array<{ chainId: string }>)[0].chainId;
+            chainId = target;
+            for (const cb of listeners["chainChanged"] ?? []) cb(target);
+            return null;
+          }
+          return null;
+        },
+        on: (event: string, cb: (...args: unknown[]) => void) => {
+          (listeners[event] ??= []).push(cb);
+        },
+        removeListener: (event: string, cb: (...args: unknown[]) => void) => {
+          listeners[event] = (listeners[event] ?? []).filter((x) => x !== cb);
+        },
+        emitChainChanged: (id: number) => {
+          chainId = "0x" + id.toString(16);
+          for (const cb of listeners["chainChanged"] ?? []) cb(chainId);
+        },
+      };
+      (window as unknown as Record<string, unknown>).ethereum = provider;
+      (window as unknown as Record<string, unknown>).__nostosProvider = provider;
+    });
+
+    await page.goto("/explore");
+    await page.getByRole("button", { name: /connect wallet/i }).first().press("Enter");
+    await page.getByRole("dialog").getByRole("button", { name: /injected|metamask/i }).click();
+    await expect(page.getByTestId("connected-address")).toContainText("1234");
+    await expect(page.getByRole("dialog")).toContainText("BOT TESTNET (968)");
+
+    // Externally switch to Celo (42220) - not present in wagmi config.chains.
+    await page.evaluate(() =>
+      (window as unknown as { __nostosProvider: { emitChainChanged: (n: number) => void } }).__nostosProvider.emitChainChanged(42220),
+    );
+
+    await expect(page.getByRole("dialog")).toContainText(/BOT TESTNET REQUIRED/i);
+    await expect(page.getByRole("dialog")).toContainText(/42220/);
+    await expect(page.getByTestId("connected-address")).toBeVisible();
+    await expect(page.getByRole("dialog")).not.toContainText(/\d+ tBOT|\d+ USDT/);
+
+    // Switch back to BOT Testnet through the app's explicit action.
+    await page.getByRole("button", { name: /switch network/i }).click();
+    await expect(page.getByRole("dialog")).toContainText("BOT TESTNET (968)");
+    await expect(page.getByRole("dialog")).not.toContainText(/BOT TESTNET REQUIRED/i);
   });
 
   test("marketing mobile drawer exposes all primary destinations", async ({ page }) => {

@@ -39,3 +39,10 @@ Testnet tBOT is claimed manually at https://faucet.botchain.ai/basic (up to 10 t
 - Nostos staging diagnostics detect this: `npm run doctor:testnet` reports an `RPC CONSISTENCY` section and classifies `HEALTHY`, `DEGRADED`, or `STALE_BACKENDS_DETECTED`.
 - The Testnet write proof (`npm run write-proof:testnet`) uses a bounded idempotent rebroadcast of a single signed raw transaction, so stale-backend `insufficient funds` symptoms are retried safely without duplicate transfers.
 - Mainnet must not automatically inherit this behavior unless equivalent evidence is observed there. BOT Chain itself is not labelled unreliable; this documents the exact observed behavior on the public Testnet RPC.
+
+## Frontend (P1)
+
+- The live frontend is explicitly gated to BOT Testnet (968); writes are disabled.
+- BOT Mainnet (677) is known internally but cannot activate in the frontend, even if a wallet connects on 677.
+- Injected/EIP-1193 wallets only. No WalletConnect in P1.
+- Live balances (tBOT, Testnet USDT) are read only when the wallet is on BOT Testnet; failed reads are shown as unavailable, never as zero.
