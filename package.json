@@ -11,7 +11,9 @@
     "test:unit": "vitest run",
     "test:e2e": "playwright test",
     "doctor:mainnet": "tsx scripts/doctor-mainnet.ts",
-    "write-proof:mainnet": "tsx scripts/mainnet-write-proof.ts"
+    "doctor:testnet": "tsx scripts/doctor-testnet.ts",
+    "write-proof:mainnet": "tsx scripts/mainnet-write-proof.ts",
+    "write-proof:testnet": "tsx scripts/write-proof-testnet.ts"
   },
   "dependencies": {
     "@base-ui/react": "^1.7.0",

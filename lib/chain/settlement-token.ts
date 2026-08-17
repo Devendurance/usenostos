@@ -2,7 +2,8 @@ export type TokenVerificationStatus =
   | "VERIFIED"
   | "PROVISIONALLY VERIFIED"
   | "UNRESOLVED"
-  | "REJECTED";
+  | "REJECTED"
+  | "NOT_AVAILABLE";
 
 export interface SettlementTokenRecord {
   address: `0x${string}` | null;
@@ -35,6 +36,22 @@ export type VerifiedSettlementToken = SettlementTokenRecord & {
   status: "VERIFIED";
   address: `0x${string}`;
   decimals: number;
+};
+
+export const CANDIDATE_BOT_TESTNET_USDT_ADDRESS =
+  "0x75edC9335175Fc0552D51D48439F229c10420fe3";
+
+export const BOT_TESTNET_SETTLEMENT_TOKEN: SettlementTokenRecord = {
+  address: CANDIDATE_BOT_TESTNET_USDT_ADDRESS,
+  symbol: "USDT",
+  decimals: 6,
+  status: "VERIFIED",
+  verifiedAt: "2026-08-17",
+  evidence: [
+    "Official BOT Chain developer documentation (dev-docs.botchain.ai/docs/Bridge/contract-addresses) lists 0x75edC9335175Fc0552D51D48439F229c10420fe3 as 'USDT (BOT Chain Testnet)' on BOT Chain Testnet (Chain ID 968).",
+    "Live on-chain reads on BOT Testnet RPC (2026-08-17): code present, name()='Tether USD', symbol()='USDT', decimals()=6.",
+    "Testnet assets are staging-only and have no economic value; testnet addresses must never be copied into Mainnet configuration.",
+  ],
 };
 
 export function isUsableSettlementToken(

@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 import {
+  BOT_TESTNET_SETTLEMENT_TOKEN,
   BOT_USDT,
   isUsableSettlementToken,
   type SettlementTokenRecord,
@@ -56,6 +57,23 @@ describe("settlement token provenance", () => {
   it("does not silently treat the candidate as canonical", () => {
     if (BOT_USDT.status !== "VERIFIED") {
       expect(isUsableSettlementToken(BOT_USDT)).toBe(false);
+    }
+  });
+});
+
+describe("mainnet vs testnet settlement separation", () => {
+  it("keeps mainnet and testnet tokens as distinct records", () => {
+    expect(BOT_TESTNET_SETTLEMENT_TOKEN).not.toBe(BOT_USDT);
+    expect(BOT_TESTNET_SETTLEMENT_TOKEN.address).not.toBe(BOT_USDT.address);
+  });
+
+  it("does not treat the mainnet USDT as a testnet token", () => {
+    expect(BOT_TESTNET_SETTLEMENT_TOKEN).not.toMatchObject(BOT_USDT);
+  });
+
+  it("never treats an unverified testnet token as usable", () => {
+    if (BOT_TESTNET_SETTLEMENT_TOKEN.status !== "VERIFIED") {
+      expect(isUsableSettlementToken(BOT_TESTNET_SETTLEMENT_TOKEN)).toBe(false);
     }
   });
 });

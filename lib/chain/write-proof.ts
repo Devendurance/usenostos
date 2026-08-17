@@ -12,20 +12,14 @@ import {
   type SettlementTokenRecord,
 } from "./settlement-token";
 
+export { assertBotMainnetChain as assertMainnetChain } from "./guards";
+
 export const P0_ENABLE_MAINNET_WRITE_ENV = "P0_ENABLE_MAINNET_WRITE";
 export const P0_WRITE_AMOUNT_ENV = "P0_WRITE_AMOUNT";
 export const P0_WRITE_TOKEN_ENV = "P0_WRITE_TOKEN";
 
 const DEFAULT_WRITE_AMOUNT = "0.0001";
 const MAX_WRITE_AMOUNT = 1;
-
-export function assertMainnetChain(chainId: number | bigint): void {
-  if (Number(chainId) !== BOT_CHAIN_ID) {
-    throw new Error(
-      `Refusing mainnet operation on chain ${chainId}; only chain ${BOT_CHAIN_ID} is allowed.`,
-    );
-  }
-}
 
 export function parseWriteAmount(
   env: Record<string, string | undefined> = process.env,
