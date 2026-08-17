@@ -1,5 +1,6 @@
 {
-  "registry": null,
-  "registryTx": null,
-  "registryBlock": null
+  "registry": "0xba7d121f30c434556e8d3f53651271b625b1c762",
+  "registryTx": "0x2cd6bbe437df4da6ce9a250439aa10f9c49580f4f2da344b3e1fa354329d6d62",
+  "registryBlock": "20205701",
+  "deployedAt": "2026-08-17T17:58:44.419Z"
 }
