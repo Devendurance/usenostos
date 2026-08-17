@@ -2,5 +2,9 @@
   "registry": "0xba7d121f30c434556e8d3f53651271b625b1c762",
   "registryTx": "0x2cd6bbe437df4da6ce9a250439aa10f9c49580f4f2da344b3e1fa354329d6d62",
   "registryBlock": "20205701",
-  "deployedAt": "2026-08-17T17:58:44.419Z"
+  "deployedAt": "2026-08-17T17:58:44.419Z",
+  "asyncVault": "0x2b0475ca0b12e3b8f9634c6ac3190e96508385d4",
+  "asyncVaultTx": "0x18f3f1e0dbb92cb6c3dca555dceff1f32e5b2c41bc72fdeae2ac6491ae54a88e",
+  "asyncVaultBlock": "20232916",
+  "asyncVaultDeployedAt": "2026-08-17T23:38:55.803Z"
 }
