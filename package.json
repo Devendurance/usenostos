@@ -17,7 +17,10 @@
     "snapshot:rwa": "tsx scripts/metadata-snapshot.ts",
     "deploy:registry:testnet": "tsx scripts/registry/deploy.ts",
     "register:rwa:testnet": "tsx scripts/registry/register.ts",
-    "contract:test": "forge test --root contracts"
+    "contract:test": "forge test --root contracts",
+    "deploy:vault:testnet": "tsx scripts/registry/deploy-vault.ts",
+    "settle:request:testnet": "tsx scripts/registry/settle.ts",
+    "register:vault:testnet": "tsx scripts/registry/register-vault.ts"
   },
   "dependencies": {
     "@base-ui/react": "^1.7.0",

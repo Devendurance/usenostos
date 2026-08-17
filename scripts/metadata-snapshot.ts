@@ -6,6 +6,9 @@ import {
   integrationIdFor,
   metadataHashFor,
 } from "../lib/rwa/metadata";
+import { loadScriptEnv } from "./load-script-env";
+
+loadScriptEnv();
 
 const outDir = join(process.cwd(), "contracts", "addresses", "snapshots");
 

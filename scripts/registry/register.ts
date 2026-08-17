@@ -15,6 +15,9 @@ import { getTestnetPrivateKey } from "@/lib/chain/builder-wallet";
 import { assertBotTestnetChain } from "@/lib/chain/guards";
 import { buildRegistrationPlan } from "@/scripts/registry/plan";
 import { registryAbi } from "@/scripts/registry/artifact";
+import { loadScriptEnv } from "../load-script-env";
+
+loadScriptEnv();
 
 async function main() {
   const slugs = process.argv.slice(2);

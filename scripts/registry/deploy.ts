@@ -16,6 +16,9 @@ import { getTestnetPrivateKey } from "@/lib/chain/builder-wallet";
 import { assertBotTestnetChain } from "@/lib/chain/guards";
 import { buildDeployPlan } from "@/scripts/registry/plan";
 import { registryAbi, registryBytecode } from "@/scripts/registry/artifact";
+import { loadScriptEnv } from "../load-script-env";
+
+loadScriptEnv();
 
 async function main() {
   const plan = buildDeployPlan();

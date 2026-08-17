@@ -156,9 +156,18 @@ test.describe("Nostos route shells", () => {
     await page.goto("/explore");
     await expect(page.getByRole("heading", { name: "OUSG" })).toBeVisible();
     await expect(page.getByRole("heading", { name: "TBILL" })).toBeVisible();
+    await expect(page.getByRole("heading", { name: "Nostos Async Settlement Vault" })).toBeVisible();
     await expect(page.getByText(/DISCOVERY ONLY/i).first()).toBeVisible();
-    await expect(page.getByText(/See issuer/i).first()).toBeVisible();
-    await expect(page.locator("main")).not.toContainText(/\d+(\.\d+)?\s?%/);
+    await expect(page.getByText(/REDEMPTION SUPPORTED/i).first()).toBeVisible();
+    // No fabricated non-zero financial values; the demo vault's explicit "0% YIELD" is truthful.
+    await expect(page.locator("main")).not.toContainText(/[1-9]\d*(\.\d+)?\s?%|0\.\d+%/);
+  });
+
+  test("demo vault detail is reachable and states a truthful not-deployed state", async ({ page }) => {
+    await page.goto("/vaults/nostos-async-vault");
+    await expect(page.getByRole("heading", { name: "Nostos Async Settlement Vault" })).toBeVisible();
+    await expect(page.getByText(/0% YIELD/i).first()).toBeVisible();
+    await expect(page.getByText(/vault not deployed/i).first()).toBeVisible();
   });
 
   test("vault detail resolves a discovery-only opportunity without financial actions", async ({ page }) => {

@@ -72,6 +72,7 @@ describe("env and secret safety", () => {
       "write-proof-testnet",
       "testnet-write",
       "guards",
+      "load-script-env",
     ];
     const clientDirs = ["app", "components"];
     const offenders: string[] = [];

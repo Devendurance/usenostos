@@ -1,5 +1,4 @@
 import { createPublicClient, erc20Abi, formatUnits, http } from "viem";
-import { existsSync } from "node:fs";
 import {
   botTestnet,
   BOT_TESTNET_CHAIN_ID,
@@ -13,16 +12,9 @@ import {
 } from "../lib/chain/settlement-token";
 import { getTestnetWallet } from "../lib/chain/builder-wallet";
 import { sampleTestnetRpcHealth } from "../lib/chain/testnet-rpc-health";
+import { loadScriptEnv } from "./load-script-env";
 
-for (const file of [".env", ".env.local"]) {
-  if (existsSync(file)) {
-    try {
-      process.loadEnvFile(file);
-    } catch {
-      /* ignore invalid env files */
-    }
-  }
-}
+loadScriptEnv();
 
 const rpcUrl = process.env.BOT_TESTNET_RPC_URL ?? BOT_TESTNET_RPC_URL;
 

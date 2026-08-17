@@ -11,6 +11,7 @@ import {
 import { PageHeading } from "@/components/ui/page-heading";
 import { StatusBadge } from "@/components/ui/status-badge";
 import { AmountForm } from "@/components/product/amount-form";
+import { DemoVaultPanel } from "@/components/product/demo-vault-panel";
 import { getOpportunityBySlug } from "@/lib/rwa/opportunities";
 import {
   canRedeem,
@@ -37,6 +38,35 @@ export default async function VaultPage({
 }) {
   const { address } = await params;
   const opportunity = getOpportunityBySlug(address);
+
+  if (address === "nostos-async-vault") {
+    return (
+      <ProductPage>
+        <PageHeading
+          eyebrow="Nostos Gateway"
+          title="Nostos Async Settlement Vault"
+          description="BOT TESTNET · 0% YIELD · REDEMPTION SUPPORTED. Testnet infrastructure demonstration. This vault does not represent an RWA investment and does not earn yield."
+          actions={
+            <StatusBadge
+              label="REDEMPTION SUPPORTED"
+              tone="pending"
+              icon={<Landmark size={14} aria-hidden="true" />}
+            />
+          }
+        />
+        <div className="mt-8">
+          <StateNotice
+            title="DEMO / 0% YIELD / TESTNET SETTLEMENT INFRASTRUCTURE"
+            message="Synchronous USDT deposit (ERC-4626) and asynchronous redemption (request → PENDING → CLAIMABLE → CLAIMED) are demonstrated against real BOT Testnet USDT. No RWA backing, no yield, no OUSG/TBILL exposure."
+            tone="warning"
+          />
+        </div>
+        <div className="mt-6">
+          <DemoVaultPanel />
+        </div>
+      </ProductPage>
+    );
+  }
 
   if (opportunity) {
     const redeemEnabled = canRedeem(opportunity);

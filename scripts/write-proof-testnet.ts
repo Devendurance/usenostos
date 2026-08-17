@@ -1,6 +1,5 @@
 import { createPublicClient, formatUnits, http } from "viem";
 import { privateKeyToAccount } from "viem/accounts";
-import { existsSync } from "node:fs";
 import {
   botTestnet,
   BOT_TESTNET_RPC_URL,
@@ -24,16 +23,9 @@ import {
   runIdempotentBroadcast,
   signedTransactionHash,
 } from "../lib/chain/testnet-write";
+import { loadScriptEnv } from "./load-script-env";
 
-for (const file of [".env", ".env.local"]) {
-  if (existsSync(file)) {
-    try {
-      process.loadEnvFile(file);
-    } catch {
-      /* ignore invalid env files */
-    }
-  }
-}
+loadScriptEnv();
 
 const rpcUrl = process.env.BOT_TESTNET_RPC_URL ?? BOT_TESTNET_RPC_URL;
 

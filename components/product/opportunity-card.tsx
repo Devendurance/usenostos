@@ -12,6 +12,9 @@ export function OpportunityCard({
   const yieldAff = opportunity.yield
     ? sourceAffordance(opportunity.yield.source)
     : null;
+  const isLive =
+    opportunity.integrationStatus === "REDEMPTION_SUPPORTED" ||
+    opportunity.integrationStatus === "DEPOSIT_SUPPORTED";
   return (
     <article className="flex flex-col gap-4 rounded-card border border-[var(--line)] bg-white p-5">
       <div className="flex items-start justify-between gap-3">
@@ -23,7 +26,10 @@ export function OpportunityCard({
             {opportunity.issuer}
           </p>
         </div>
-        <StatusBadge label="DISCOVERY ONLY" tone="neutral" />
+        <StatusBadge
+          label={isLive ? "REDEMPTION SUPPORTED" : "DISCOVERY ONLY"}
+          tone={isLive ? "pending" : "neutral"}
+        />
       </div>
       <p className="text-sm leading-6 text-muted-foreground">
         {opportunity.description}

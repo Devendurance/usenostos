@@ -6,7 +6,6 @@ import {
   http,
 } from "viem";
 import { privateKeyToAccount } from "viem/accounts";
-import { existsSync } from "node:fs";
 import {
   botMainnet,
   BOT_CHAIN_RPC_URL,
@@ -20,16 +19,9 @@ import {
   P0_ENABLE_MAINNET_WRITE_ENV,
 } from "../lib/chain/write-proof";
 import { BOT_USDT, isUsableSettlementToken } from "../lib/chain/settlement-token";
+import { loadScriptEnv } from "./load-script-env";
 
-for (const file of [".env", ".env.local"]) {
-  if (existsSync(file)) {
-    try {
-      process.loadEnvFile(file);
-    } catch {
-      /* ignore invalid env files */
-    }
-  }
-}
+loadScriptEnv();
 
 const rpcUrl = process.env.BOT_MAINNET_RPC_URL ?? BOT_CHAIN_RPC_URL;
 

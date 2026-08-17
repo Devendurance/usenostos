@@ -1,40 +1,39 @@
 # Left Off
 
 ## Current Task
-P2 RWA discovery + Registry foundation is complete. Next milestone is P3.
+P3 Nostos Async Settlement Vault implementation is complete (contract + tests + tooling + frontend). Next milestone is P4 ticketization (not started).
 
-## Completed In This Session
-- Installed Foundry 1.7.1 and initialized a Foundry workspace at `contracts/` (OpenZeppelin v5.3.0 + forge-std) without restructuring the Next.js app.
-- Added `lib/rwa/` domain layer: types (SourcedValue/SourceReference/IntegrationStatus/RwaOpportunity), display rules (`Not reported`, provenance affordances, `canDeposit`/`canRedeem`, filter/sort on real fields only).
-- Added source-backed OUSG (Ondo) and TBILL (OpenEden) records with field-level provenance and `DISCOVERY_ONLY` status.
-- Added deterministic canonical metadata serialization + hashing (`lib/rwa/metadata.ts`) and `npm run snapshot:rwa`.
-- Populated Explore with real OUSG/TBILL cards; Vault Detail resolves slugs and shows a clear `DISCOVERY ONLY` state with no deposit/redeem actions.
-- Added `NostosRegistry` contract (OpenZeppelin Ownable, status + metadata-hash only, duplicate/guard/events) with 8 passing Foundry tests.
-- Added testnet deploy/register tooling (`scripts/registry/*`, `P2_ENABLE_TESTNET_DEPLOY` opt-in, `assertBotTestnetChain`, artifact reader, addresses persistence). Not executed.
+## Completed In This Session (P3 continuation)
+- Recovered prior P3 state: `NostosAsyncVault.sol`, `interfaces/IERC7540.sol` + `IERC7575.sol`, `NostosAsyncVault.t.sol` (32 Foundry tests green), `scripts/registry/deploy-vault.ts` + `vault-plan.ts` + `artifact.ts`, and the P2 env-loading fix (already applied).
+- Added demo-vault opportunity `lib/rwa/opportunities/demo-vault.ts` (REDEMPTION_SUPPORTED, 0% yield, no RWA backing) and added it to the opportunities list, card badge, and explore category.
+- Added `lib/contracts/nostos-async-vault-abi.ts`, `lib/chain/deployed-addresses.ts`, `lib/chain/vault-hooks.ts` (live reads + writes), and `components/product/demo-vault-panel.tsx` (real approve→deposit, requestRedeem, claim with REVIEW→SIGN→SUBMITTED→CONFIRMING→CONFIRMED/FAILED stages + explorer links).
+- Wired the demo vault into the Vault Detail route (`/vaults/nostos-async-vault`).
+- Added `scripts/registry/settle.ts` (settlement CLI, P3 opt-in, chain-968 guard, reads request first, refuses insufficient unreserved liquidity) and `scripts/registry/register-vault.ts` (registers/updates the demo vault as REDEMPTION_SUPPORTED with nostosVault).
+- Added npm scripts `deploy:vault:testnet`, `settle:request:testnet`, `register:vault:testnet`; unit tests `tests/unit/vault-plan.test.ts`; updated `rwa-opportunities.test.ts` and explore e2e for the demo vault.
 
 ## Files Involved
-- `lib/rwa/*` (types, display, metadata, opportunities/{ousg,tbill,index})
-- `components/product/opportunity-card.tsx`, `explorer-controls.tsx`
-- `app/(product)/explore/page.tsx`, `app/(product)/vaults/[address]/page.tsx`
-- `contracts/` (foundry.toml, remappings.txt, src/NostosRegistry.sol, test/NostosRegistry.t.sol, script/DeployNostosRegistry.s.sol, addresses/bot-testnet.json, lib/ submodules)
-- `scripts/metadata-snapshot.ts`, `scripts/registry/{plan,artifact,deploy,register}.ts`
-- `tests/unit/{rwa-display,rwa-opportunities,rwa-metadata,registry-plan}.test.ts`, `tests/e2e/nostos.spec.ts`
-- `.env.example`, `package.json`, `eslint.config.mjs`
-- `docs/superpowers/plans/2026-08-17-p2-rwa-discovery-registry-foundation.md`
+- `contracts/src/NostosAsyncVault.sol`, `contracts/src/interfaces/{IERC7540,IERC7575}.sol`, `contracts/test/NostosAsyncVault.t.sol`
+- `lib/rwa/opportunities/demo-vault.ts`, `lib/contracts/nostos-async-vault-abi.ts`, `lib/chain/{deployed-addresses,vault-hooks}.ts`
+- `components/product/{demo-vault-panel,opportunity-card,explorer-controls}.tsx`
+- `app/(product)/vaults/[address]/page.tsx`
+- `scripts/registry/{vault-plan,artifact,deploy-vault,settle,register-vault}.ts`
+- `tests/unit/{vault-plan,rwa-opportunities}.test.ts`, `tests/e2e/nostos.spec.ts`
+- `package.json`, `.agent-state/*`, `docs/superpowers/plans/2026-08-17-p3-...md`
 
 ## Verification
-- `npm test`: 89 passed.
+- `npm test`: 97 passed.
 - `npx tsc --noEmit`: passed.
 - `npm run lint`: passed.
 - `npm run build`: passed (all routes).
-- `npm run test:e2e`: 27 passed.
-- `forge test` (contracts): 8 passed.
-- `npm run snapshot:rwa` printed deterministic integration ids + metadata hashes.
+- `npm run test:e2e`: 28 passed.
+- `forge test` (contracts): 32 passed.
+- `npm run snapshot:rwa` prints the demo vault integration id `0x508c…5a2b` + metadata hash `0xd946…74e9`.
+- `deploy:vault:testnet` / `settle:request:testnet` exit DISABLED without `P3_ENABLE_TESTNET_DEPLOY=true`; `register:vault:testnet` refuses until asyncVault is persisted. No deployment/settlement/registration executed.
 
 ## Blockers
-- Registry deployment and OUSG/TBILL registration are NOT executed (require `P2_ENABLE_TESTNET_DEPLOY=true`, a `BOT_TESTNET_PRIVATE_KEY`, and explicit authorization).
-- No live/current APY/TVL/NAV source is integrated; dynamic values stay `Not reported`.
-- Metadata is hash-anchored only; no metadata hosting URI yet (documented limitation).
+- The demo vault is NOT deployed to BOT Testnet (requires explicit authorization + `P3_ENABLE_TESTNET_DEPLOY=true`); the frontend truthfully shows "Vault not deployed".
+- Settlement authority is admin CLI tooling only; the UI never marks a request Claimable by timer.
+- Stale `rpc.bohr.life` backends may transiently disagree with the explorer during manual verification.
 
 ## Next Action
-P3 not started. For manual verification run the P2 manual browser script (Explore shows only OUSG + TBILL with provenance; each Vault Detail shows DISCOVERY ONLY with no deposit/redeem; wallet P1 behavior intact).
+P4 not started. Manual end-to-end: deploy vault → register in NostosRegistry → connect wallet on 968 → deposit USDT → requestRedeem → run settle CLI → claim → verify on BOT Scan.

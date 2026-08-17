@@ -1,0 +1,24 @@
+import { parseAbi } from "viem";
+
+export const nostosAsyncVaultAbi = parseAbi([
+  "function asset() view returns (address)",
+  "function totalAssets() view returns (uint256)",
+  "function decimals() view returns (uint8)",
+  "function totalSupply() view returns (uint256)",
+  "function balanceOf(address account) view returns (uint256)",
+  "function allowance(address owner, address spender) view returns (uint256)",
+  "function approve(address spender, uint256 amount) returns (bool)",
+  "function deposit(uint256 assets, address receiver) returns (uint256)",
+  "function requestRedeem(uint256 shares, address controller, address owner) returns (uint256)",
+  "function settleRequest(uint256 requestId) returns (uint256)",
+  "function redeem(uint256 shares, address receiver, address controller) returns (uint256)",
+  "function withdraw(uint256 assets, address receiver, address controller) returns (uint256)",
+  "function isOperator(address controller, address operator) view returns (bool)",
+  "function setOperator(address operator, bool approved) returns (bool)",
+  "function activeRequestId(address controller) view returns (uint256)",
+  "function requestController(uint256 requestId) view returns (address)",
+  "function reservedClaimableAssets() view returns (uint256)",
+  "function sharesToAssets(uint256 shares) pure returns (uint256)",
+  "function nextRequestId() view returns (uint256)",
+  "function requests(uint256 requestId, address controller) view returns (uint256 id, address reqController, address owner, uint256 shares, uint256 assetsClaimable, uint64 requestedAt, uint64 claimableAt, uint64 claimedAt, uint8 status)",
+]);

@@ -6,7 +6,7 @@ import type { RwaOpportunity } from "@/lib/rwa/types";
 import { filterOpportunities, sortOpportunities } from "@/lib/rwa/display";
 import { OpportunityCard } from "@/components/product/opportunity-card";
 
-const categories = ["All", "Treasuries"] as const;
+const categories = ["All", "Treasuries", "Testnet Demo"] as const;
 const sorts = ["name"] as const;
 
 export function ExplorerControls({
