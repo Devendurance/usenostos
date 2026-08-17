@@ -1,35 +1,34 @@
 # Left Off
 
 ## Current Task
-Refine the landing page below the hero: rebuild the paper-fold/corkboard feature, repair muted text contrast tokens across shared consumers, and apply the hero CTA treatment to the final Explore vaults action.
+P0 BOT Mainnet reality check is complete. Next milestone is P1 (consuming the canonical chain definition and verified settlement token from the frontend).
 
 ## Completed In This Session
-- Rebuilt the marketing header and hero to match the supplied prototype composition: restrained 80px header, centered nav, three-line General Sans headline, stepped supporting copy, twin-offset CTA, and clean two-column collage.
-- Added the truthful wallet / vault terms / redemption request / settlement record collage with a small GSAP stagger and desktop-only pointer parallax.
-- Restored the typed shadcn/Base UI `LinkButton` adapter and `hero`, `quiet`, and `header` variants; fixed the wallet trigger variant and mapped General Sans/body typography correctly.
-- Split the muted surface and muted text tokens, added the local dev origin allowance needed by Playwright, and added prototype-specific browser assertions plus 1024px overflow coverage.
-- Captured the 1440×900 implementation review in `design-qa.md` and `design-qa-assets/nostos-hero-1440.png`.
-- Rebuilt the full-bleed fold with a white overlapping sheet, blended curled corner, forest grid board, pinned pushpin/paperclip notes, compact `/how-it-works` pill CTA, and truthful pending/claimable/claimed copy.
-- Added optimized `public/images/feature/paper-curl.webp`, `pushpin.webp`, and `paperclip.webp` assets plus 1440px and 375px fold captures.
-- Updated every pre-footer Explore vaults action to the hero twin-offset variant and added a typed `data-variant` marker for browser assertions.
-- Extended E2E coverage for fold assets, mobile note simplification, token separation, and CTA destinations.
+- Installed Viem (runtime), Vitest and tsx (dev), added `doctor:mainnet`, `write-proof:mainnet`, `test`, `test:unit` scripts, `.env.example`, and un-ignored `.env.example`.
+- Added canonical BOT Mainnet chain definition (`lib/chain/bot-mainnet.ts`), provenance surface (`lib/chain/provenance.ts`), settlement-token record/gate (`lib/chain/settlement-token.ts`), server-only builder wallet reader (`lib/chain/builder-wallet.ts`), and opt-in write-proof guard (`lib/chain/write-proof.ts`).
+- Added read-only doctor (`scripts/doctor-mainnet.ts`) and opt-in write-proof script (`scripts/mainnet-write-proof.ts`).
+- Added 23 deterministic Vitest unit tests (`tests/unit/`) and `vitest.config.mts`.
+- Live doctor run on BOT Mainnet: chain 677 verified, latest block ~19,979,422, RPC capability audit OK, `eth_getLogs` responded for a 200-block range.
+- USDT investigation concluded: VERIFIED at `0xaBabc7Ddc03e501d190C676BF3d92ef0e6e87a3C` (symbol USDT, 6 decimals, total supply 58,960,200), based on official BOT dev docs and on-chain reads.
 
 ## Files Involved
-- `components/brand/marketing-hero.tsx`, `components/brand/marketing.module.css`, `components/shell/marketing-header.tsx`
-- `components/ui/button.tsx`, `components/shell/wallet-preview-dialog.tsx`, `app/layout.tsx`, `app/globals.css`
-- `tests/e2e/nostos.spec.ts`, `design-qa.md`
+- `lib/chain/*` (bot-mainnet, provenance, settlement-token, builder-wallet, write-proof)
+- `scripts/doctor-mainnet.ts`, `scripts/mainnet-write-proof.ts`
+- `tests/unit/*.test.ts`, `vitest.config.mts`
+- `package.json`, `package-lock.json`, `.env.example`, `.gitignore`
+- `docs/superpowers/plans/2026-08-17-p0-bot-mainnet-reality-check.md`
 
 ## Verification
-- `npm run lint` passes.
-- `npx tsc --noEmit` passes.
-- `npm run build` passes for all 14 routes.
-- Final checks pass: `npm run lint`, `npx tsc --noEmit`, `npm run build`, and `npm run test:e2e` (25 tests, including fold assets, CTA destinations, wallet dialog, mobile drawer, all routes, malformed vault 404, and zero-fabricated-data assertions).
-- In-app browser review passed at 1440px and 375px; intermediate 768px/1024px overflow checks are green in Playwright.
-- Source-only `git diff --check` passes; generated `.next-build` remains intentionally untouched despite unrelated generated cache changes.
+- `npm test`: 23 passed.
+- `npx tsc --noEmit`: passed.
+- `npm run lint`: passed.
+- `npm run build`: passed (all routes).
+- `npm run doctor:mainnet`: chain 677 verified, latest block read, USDT VERIFIED.
 
 ## Blockers
-- Existing unrelated documentation changes remain unstaged and must be preserved.
-- No live wallet, contract, API, or data adapters are in scope; all product data surfaces must remain truthful unavailable/empty states.
+- Builder wallet not configured in this environment; doctor reports NOT CONFIGURED. Add `BOT_BUILDER_PRIVATE_KEY` locally to enable wallet checks (never commit it).
+- BOT Scan displays conflicting token metadata for the verified USDT token ("Stub Token (goerli)"); recorded as an explorer artifact.
+- Existing unrelated documentation and UI worktree changes remain unstaged and must be preserved.
 
 ## Next Action
-Keep the hero and fold refinements intact while the next pass addresses any broader marketing-page visual polish. Local preview is running at `http://localhost:3000/`; wallet/data integrations remain disabled until the product integration phase.
+Begin P1: consume `botMainnet` and `BOT_USDT` from the frontend (chain switching, wallet connect flow), and re-run `npm run doctor:mainnet` before any contract or write work.
