@@ -15,6 +15,7 @@
 - Live reads (tBOT native balance, Testnet USDT `balanceOf`) run only when connected on 968. Read states are idle/loading/ready/unavailable; failed reads are never zero.
 - Server-only secrets stay in `BOT_BUILDER_PRIVATE_KEY` / `BOT_TESTNET_PRIVATE_KEY` and are never imported from `app/` or `components/` (enforced by test).
 - `rpc.bohr.life` may serve stale backends; P0.5 diagnostics classify HEALTHY/DEGRADED/STALE_BACKENDS_DETECTED and Testnet writes use a signed-once idempotent rebroadcast.
+- P2 RWA discovery: OUSG (Ondo) and TBILL (OpenEden) are `DISCOVERY_ONLY` source-backed records in `lib/rwa/`; dynamic APY/TVL/NAV are never fabricated (`Not reported`). The `NostosRegistry` contract (contracts/src) anchors integration status + metadata hashes only. Testnet deploy/register require `P2_ENABLE_TESTNET_DEPLOY=true` and refuse chain 677.
 - The repository state folder is `.agent-state/` and is committed to Git; state files are factual snapshots, not a chat transcript.
 
 ## Design Constraints

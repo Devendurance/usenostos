@@ -17,6 +17,9 @@ const eslintConfig = defineConfig([
     "test-results/**",
     "playwright-report/**",
     "next-env.d.ts",
+    // Vendored Foundry dependencies and build output:
+    "contracts/lib/**",
+    "contracts/out/**",
   ]),
 ]);
 

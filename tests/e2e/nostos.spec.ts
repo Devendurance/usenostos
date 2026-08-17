@@ -152,11 +152,21 @@ test.describe("Nostos route shells", () => {
     await expect(page.getByRole("navigation", { name: /mobile main navigation/i })).toBeHidden();
   });
 
-  test("explorer filters are local controls with no fabricated rows", async ({ page }) => {
+  test("explore shows real discovery cards with no fabricated financial values", async ({ page }) => {
     await page.goto("/explore");
-    await page.getByRole("button", { name: /private credit/i }).click();
-    await expect(page.getByText(/vault data is not connected/i)).toBeVisible();
-    await expect(page.locator("tbody tr")).toHaveCount(0);
+    await expect(page.getByRole("heading", { name: "OUSG" })).toBeVisible();
+    await expect(page.getByRole("heading", { name: "TBILL" })).toBeVisible();
+    await expect(page.getByText(/DISCOVERY ONLY/i).first()).toBeVisible();
+    await expect(page.getByText(/See issuer/i).first()).toBeVisible();
+    await expect(page.locator("main")).not.toContainText(/\d+(\.\d+)?\s?%/);
+  });
+
+  test("vault detail resolves a discovery-only opportunity without financial actions", async ({ page }) => {
+    await page.goto("/vaults/tbill");
+    await expect(page.getByRole("heading", { name: "TBILL" })).toBeVisible();
+    await expect(page.getByText(/DISCOVERY ONLY/i).first()).toBeVisible();
+    await expect(page.getByRole("button", { name: /deposit unavailable/i })).toBeVisible();
+    await expect(page.getByRole("button", { name: /redeem|approve|instant cashout/i })).toHaveCount(0);
   });
 });
 
