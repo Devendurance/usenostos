@@ -16,6 +16,9 @@ const generalSans = localFont({ variable: "--font-general-sans", display: "swap"
 export const metadata: Metadata = {
   title: { default: "Nostos — Capital on its way home", template: "%s — Nostos" },
   description: "Nostos is the redemption and settlement layer for tokenized real-world assets.",
+  icons: {
+    icon: "/favicon.ico",
+  },
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
