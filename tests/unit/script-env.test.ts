@@ -13,12 +13,18 @@ describe("script environment loading", () => {
     const dir = mkdtempSync(join(tmpdir(), "nostos-env-"));
     const file = join(dir, ".env");
     writeFileSync(file, `BOT_TESTNET_PRIVATE_KEY=${TESTNET_KEY}\n`);
+    const previousKey = process.env.BOT_TESTNET_PRIVATE_KEY;
     try {
+      delete process.env.BOT_TESTNET_PRIVATE_KEY;
       loadEnvFileIntoProcess(file);
       expect(process.env.BOT_TESTNET_PRIVATE_KEY).toBe(TESTNET_KEY);
       expect(getTestnetPrivateKey(process.env)).toBe(TESTNET_KEY);
     } finally {
-      delete process.env.BOT_TESTNET_PRIVATE_KEY;
+      if (previousKey === undefined) {
+        delete process.env.BOT_TESTNET_PRIVATE_KEY;
+      } else {
+        process.env.BOT_TESTNET_PRIVATE_KEY = previousKey;
+      }
       rmSync(dir, { recursive: true, force: true });
     }
   });

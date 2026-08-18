@@ -163,11 +163,12 @@ test.describe("Nostos route shells", () => {
     await expect(page.locator("main")).not.toContainText(/[1-9]\d*(\.\d+)?\s?%|0\.\d+%/);
   });
 
-  test("demo vault detail is reachable and states a truthful not-deployed state", async ({ page }) => {
+  test("demo vault detail is reachable and reflects its persisted deployment state", async ({ page }) => {
     await page.goto("/vaults/nostos-async-vault");
     await expect(page.getByRole("heading", { name: "Nostos Async Settlement Vault" })).toBeVisible();
     await expect(page.getByText(/0% YIELD/i).first()).toBeVisible();
-    await expect(page.getByText(/vault not deployed/i).first()).toBeVisible();
+    await expect(page.getByText(/Vault address/i).first()).toBeVisible();
+    await expect(page.getByText(/Vault assets/i).first()).toBeVisible();
   });
 
   test("vault detail resolves a discovery-only opportunity without financial actions", async ({ page }) => {

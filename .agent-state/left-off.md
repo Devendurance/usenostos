@@ -1,39 +1,42 @@
 # Left Off
 
 ## Current Task
-P3 Nostos Async Settlement Vault implementation is complete (contract + tests + tooling + frontend). Next milestone is P4 ticketization (not started).
+Vercel production deployment readiness fix is complete. P3 remains complete; P4 ticketization is not started.
 
-## Completed In This Session (P3 continuation)
-- Recovered prior P3 state: `NostosAsyncVault.sol`, `interfaces/IERC7540.sol` + `IERC7575.sol`, `NostosAsyncVault.t.sol` (32 Foundry tests green), `scripts/registry/deploy-vault.ts` + `vault-plan.ts` + `artifact.ts`, and the P2 env-loading fix (already applied).
-- Added demo-vault opportunity `lib/rwa/opportunities/demo-vault.ts` (REDEMPTION_SUPPORTED, 0% yield, no RWA backing) and added it to the opportunities list, card badge, and explore category.
-- Added `lib/contracts/nostos-async-vault-abi.ts`, `lib/chain/deployed-addresses.ts`, `lib/chain/vault-hooks.ts` (live reads + writes), and `components/product/demo-vault-panel.tsx` (real approve→deposit, requestRedeem, claim with REVIEW→SIGN→SUBMITTED→CONFIRMING→CONFIRMED/FAILED stages + explorer links).
-- Wired the demo vault into the Vault Detail route (`/vaults/nostos-async-vault`).
-- Added `scripts/registry/settle.ts` (settlement CLI, P3 opt-in, chain-968 guard, reads request first, refuses insufficient unreserved liquidity) and `scripts/registry/register-vault.ts` (registers/updates the demo vault as REDEMPTION_SUPPORTED with nostosVault).
-- Added npm scripts `deploy:vault:testnet`, `settle:request:testnet`, `register:vault:testnet`; unit tests `tests/unit/vault-plan.test.ts`; updated `rwa-opportunities.test.ts` and explore e2e for the demo vault.
+## Completed In This Session
+- Confirmed the favicon fix from commit `b5c2f1e`: `app/favicon.ico` is absent, `public/favicon.ico` is tracked, and `app/layout.tsx` explicitly references `/favicon.ico`.
+- Reproduced the Vercel output failure: `npm run build` exited `0` but created only `.next-build` because `next.config.ts` defaulted `distDir` to `.next-build`.
+- Removed the custom `distDir`; Next now uses its standard `.next` output. Removed the stale `.next-build/` ignore entry.
+- Added `tests/unit/deployment-config.test.ts`, including a verified red-green regression check for the default output directory.
+- Updated the stale demo-vault E2E assertion to match persisted deployment address `0x2b0475ca0b12e3b8f9634c6ac3190e96508385d4`.
+- Made `tests/unit/script-env.test.ts` isolate inherited private-key environment state without changing production secret precedence or loading behavior.
 
-## Files Involved
-- `contracts/src/NostosAsyncVault.sol`, `contracts/src/interfaces/{IERC7540,IERC7575}.sol`, `contracts/test/NostosAsyncVault.t.sol`
-- `lib/rwa/opportunities/demo-vault.ts`, `lib/contracts/nostos-async-vault-abi.ts`, `lib/chain/{deployed-addresses,vault-hooks}.ts`
-- `components/product/{demo-vault-panel,opportunity-card,explorer-controls}.tsx`
-- `app/(product)/vaults/[address]/page.tsx`
-- `scripts/registry/{vault-plan,artifact,deploy-vault,settle,register-vault}.ts`
-- `tests/unit/{vault-plan,rwa-opportunities}.test.ts`, `tests/e2e/nostos.spec.ts`
-- `package.json`, `.agent-state/*`, `docs/superpowers/plans/2026-08-17-p3-...md`
+## Files Changed
+- `next.config.ts`
+- `.gitignore`
+- `tests/unit/deployment-config.test.ts`
+- `tests/unit/script-env.test.ts`
+- `tests/e2e/nostos.spec.ts`
+- `.agent-state/left-off.md`
 
 ## Verification
-- `npm test`: 97 passed.
+- Clean `npm run build`: passed; `.next` exists and `.next-build` is absent.
+- `npm test`: 98 passed across 17 files.
 - `npx tsc --noEmit`: passed.
 - `npm run lint`: passed.
-- `npm run build`: passed (all routes).
 - `npm run test:e2e`: 28 passed.
-- `forge test` (contracts): 32 passed.
-- `npm run snapshot:rwa` prints the demo vault integration id `0x508c…5a2b` + metadata hash `0xd946…74e9`.
-- `deploy:vault:testnet` / `settle:request:testnet` exit DISABLED without `P3_ENABLE_TESTNET_DEPLOY=true`; `register:vault:testnet` refuses until asyncVault is persisted. No deployment/settlement/registration executed.
+- `forge test`: 32 passed.
+- No `vercel.json`, `vercel.ts`, or Turborepo config exists in the repository.
+- No private-key references were found under `app/` or `components/`.
+- Worktree remains uncommitted.
+
+## Root Causes
+- Favicon: the old `app/favicon.ico` file was processed as an App Router metadata route and Next attempted to resolve `app/favicon.ico/route`, producing `ENOTDIR` because `favicon.ico` is a file, not a directory.
+- Output: the repository-controlled `distDir` forced `.next-build`; Vercel checked the standard `.next` directory after the successful build and did not find it.
 
 ## Blockers
-- The demo vault is NOT deployed to BOT Testnet (requires explicit authorization + `P3_ENABLE_TESTNET_DEPLOY=true`); the frontend truthfully shows "Vault not deployed".
-- Settlement authority is admin CLI tooling only; the UI never marks a request Claimable by timer.
-- Stale `rpc.bohr.life` backends may transiently disagree with the explorer during manual verification.
+- No repository build blocker remains.
+- If the Vercel Dashboard has an override, it must use the repository root, Next.js framework preset, `npm run build` or default build command, and framework-default output directory. Do not use `.next-build`.
 
 ## Next Action
-P4 not started. Manual end-to-end: deploy vault → register in NostosRegistry → connect wallet on 968 → deposit USDT → requestRedeem → run settle CLI → claim → verify on BOT Scan.
+Redeploy from the current uncommitted working tree after applying the dashboard settings above. Do not start P4 in this task.
