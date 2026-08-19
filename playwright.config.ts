@@ -18,5 +18,12 @@ export default defineConfig({
     url: process.env.PLAYWRIGHT_BASE_URL ?? "http://127.0.0.1:3000",
     reuseExistingServer: !process.env.CI,
     timeout: 120_000,
+    env: {
+      NEXT_PUBLIC_NOSTOS_E2E: "true",
+      NEXT_PUBLIC_NOSTOS_E2E_P4_FIXTURE: JSON.stringify({
+        asyncVault: "0x0000000000000000000000000000000000000101",
+        redemptionTicket: "0x0000000000000000000000000000000000000202",
+      }),
+    },
   },
 });

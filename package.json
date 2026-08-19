@@ -20,7 +20,10 @@
     "contract:test": "forge test --root contracts",
     "deploy:vault:testnet": "tsx scripts/registry/deploy-vault.ts",
     "settle:request:testnet": "tsx scripts/registry/settle.ts",
-    "register:vault:testnet": "tsx scripts/registry/register-vault.ts"
+    "register:vault:testnet": "tsx scripts/registry/register-vault.ts",
+    "deploy:vault:p4:testnet": "tsx scripts/registry/deploy-vault-p4.ts",
+    "register:vault:p4:testnet": "tsx scripts/registry/register-vault-p4.ts",
+    "settle:request:p4:testnet": "tsx scripts/registry/settle-p4.ts"
   },
   "dependencies": {
     "@base-ui/react": "^1.7.0",

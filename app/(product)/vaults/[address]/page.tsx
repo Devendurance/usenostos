@@ -12,6 +12,8 @@ import { PageHeading } from "@/components/ui/page-heading";
 import { StatusBadge } from "@/components/ui/status-badge";
 import { AmountForm } from "@/components/product/amount-form";
 import { DemoVaultPanel } from "@/components/product/demo-vault-panel";
+import { TicketedDemoVaultPanel } from "@/components/product/ticketed-demo-vault-panel";
+import { deployedTestnet } from "@/lib/chain/deployed-addresses";
 import { getOpportunityBySlug } from "@/lib/rwa/opportunities";
 import {
   canRedeem,
@@ -27,6 +29,10 @@ export const metadata: Metadata = {
 };
 
 const evmAddress = /^0x[a-fA-F0-9]{40}$/;
+const hasP4Deployment = Boolean(
+  deployedTestnet.p4?.asyncVault && deployedTestnet.p4.redemptionTicket,
+);
+
 function shorten(address: string) {
   return `${address.slice(0, 8)}…${address.slice(-6)}`;
 }
@@ -45,7 +51,11 @@ export default async function VaultPage({
         <PageHeading
           eyebrow="Nostos Gateway"
           title="Nostos Async Settlement Vault"
-          description="BOT TESTNET · 0% YIELD · REDEMPTION SUPPORTED. Testnet infrastructure demonstration. This vault does not represent an RWA investment and does not earn yield."
+          description={
+            hasP4Deployment
+              ? "BOT TESTNET · 0% YIELD · REDEMPTION SUPPORTED. Testnet settlement infrastructure with asynchronous redemption and transferable ERC-721 claim tickets. This vault does not represent an RWA investment and does not earn yield."
+              : "BOT TESTNET · 0% YIELD · REDEMPTION SUPPORTED. Testnet infrastructure demonstration with asynchronous redemption. This vault does not represent an RWA investment and does not earn yield."
+          }
           actions={
             <StatusBadge
               label="REDEMPTION SUPPORTED"
@@ -57,12 +67,20 @@ export default async function VaultPage({
         <div className="mt-8">
           <StateNotice
             title="DEMO / 0% YIELD / TESTNET SETTLEMENT INFRASTRUCTURE"
-            message="Synchronous USDT deposit (ERC-4626) and asynchronous redemption (request → PENDING → CLAIMABLE → CLAIMED) are demonstrated against real BOT Testnet USDT. No RWA backing, no yield, no OUSG/TBILL exposure."
+            message={
+              hasP4Deployment
+                ? "Synchronous USDT deposit (ERC-4626) and asynchronous redemption (request → PENDING → CLAIMABLE → CLAIMED) are demonstrated against real BOT Testnet USDT. A transferable ERC-721 ticket represents the right to receive settlement proceeds. No RWA backing, no yield, no OUSG/TBILL exposure."
+                : "Synchronous USDT deposit (ERC-4626) and asynchronous redemption (request → PENDING → CLAIMABLE → CLAIMED) are demonstrated against real BOT Testnet USDT. The existing P3 vault has no transferable ERC-721 claim ticket. No RWA backing, no yield, no OUSG/TBILL exposure."
+            }
             tone="warning"
           />
         </div>
         <div className="mt-6">
-          <DemoVaultPanel />
+          {hasP4Deployment ? (
+            <TicketedDemoVaultPanel />
+          ) : (
+            <DemoVaultPanel />
+          )}
         </div>
       </ProductPage>
     );

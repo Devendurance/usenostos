@@ -83,3 +83,26 @@ export const demoVaultOpportunity: RwaOpportunity = {
   },
   integrationStatus: "REDEMPTION_SUPPORTED",
 };
+
+export const p4DemoVaultOpportunity: RwaOpportunity = {
+  ...demoVaultOpportunity,
+  description:
+    "BOT TESTNET · 0% YIELD · REDEMPTION SUPPORTED. Testnet settlement infrastructure demonstration with asynchronous redemption and TRANSFERABLE ERC-721 CLAIM TICKETS. This vault does not represent an RWA investment and does not earn yield.",
+  settlement: {
+    ...demoVaultOpportunity.settlement,
+    value: {
+      ...demoVaultOpportunity.settlement.value,
+      redemption:
+        "Asynchronous redemption: requestRedeem locks shares (Pending), mints a transferable ERC-721 redemption claim ticket to the controller, and a Nostos settler transitions the request to Claimable against reserved real USDT. The current ticket owner claims the settlement proceeds.",
+      processing:
+        "Settlement is demonstrated by Nostos admin tooling, never by a timer. Transferring the ticket transfers the right to claim the request's settlement proceeds.",
+    },
+  },
+  backing: {
+    ...demoVaultOpportunity.backing!,
+    value: {
+      ...demoVaultOpportunity.backing!.value,
+      custody: "Held in the NostosAsyncVaultP4 contract on BOT Testnet.",
+    },
+  },
+};

@@ -1,4 +1,4 @@
-import { readFileSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 
 export interface FoundryArtifact {
@@ -6,9 +6,16 @@ export interface FoundryArtifact {
   bytecode?: { object?: string };
 }
 
+function artifactPath(name: string): string {
+  return join(process.cwd(), "contracts", "out", name);
+}
+
 export function readArtifact(name: string): FoundryArtifact {
-  const file = join(process.cwd(), "contracts", "out", name);
-  return JSON.parse(readFileSync(file, "utf8")) as FoundryArtifact;
+  return JSON.parse(readFileSync(artifactPath(name), "utf8")) as FoundryArtifact;
+}
+
+export function readOptionalArtifact(name: string): FoundryArtifact | undefined {
+  return existsSync(artifactPath(name)) ? readArtifact(name) : undefined;
 }
 
 const registryArtifact = readArtifact("NostosRegistry.sol/NostosRegistry.json");
@@ -20,3 +27,20 @@ const vaultArtifact = readArtifact("NostosAsyncVault.sol/NostosAsyncVault.json")
 
 export const vaultAbi = vaultArtifact.abi as never;
 export const vaultBytecode = vaultArtifact.bytecode?.object as `0x${string}`;
+
+const p4VaultArtifact = readOptionalArtifact(
+  "NostosAsyncVaultP4.sol/NostosAsyncVaultP4.json",
+);
+
+export const p4VaultAbi = p4VaultArtifact?.abi;
+export const p4VaultBytecode = p4VaultArtifact?.bytecode?.object as
+  | `0x${string}`
+  | undefined;
+
+const redemptionTicketArtifact = readOptionalArtifact(
+  "NostosRedemptionTicket.sol/NostosRedemptionTicket.json",
+);
+
+export const redemptionTicketAbi = redemptionTicketArtifact?.abi;
+export const redemptionTicketBytecode = redemptionTicketArtifact?.bytecode
+  ?.object as `0x${string}` | undefined;
