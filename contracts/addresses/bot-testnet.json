@@ -6,5 +6,17 @@
   "asyncVault": "0x2b0475ca0b12e3b8f9634c6ac3190e96508385d4",
   "asyncVaultTx": "0x18f3f1e0dbb92cb6c3dca555dceff1f32e5b2c41bc72fdeae2ac6491ae54a88e",
   "asyncVaultBlock": "20232916",
-  "asyncVaultDeployedAt": "2026-08-17T23:38:55.803Z"
+  "asyncVaultDeployedAt": "2026-08-17T23:38:55.803Z",
+  "p4": {
+    "asyncVault": "0xd6333420629dcd2f9bce31ef12c8a95e5e13fdac",
+    "asyncVaultTx": "0x2aecc325da12e018bd0c0dfc0e6f3cb1a56a7db18a61bc75e09d208c2322c63a",
+    "asyncVaultBlock": "20356120",
+    "asyncVaultDeployedAt": "2026-08-19T01:19:25.824Z",
+    "redemptionTicket": "0x59b2580c5bdbcfb32066ed013f9ff0f7a812fd7f",
+    "redemptionTicketTx": "0xfb70bd582c4b02da44fd487988d8ab83f3945477894d136c61093931e1db326c",
+    "redemptionTicketBlock": "20356132",
+    "redemptionTicketDeployedAt": "2026-08-19T01:19:34.356Z",
+    "configureTx": "0x94d1f02afc94ec654a553fd5a8b422dd4e9d7b0b68ac7d5288a329af1ee44d9f",
+    "configuredAt": "2026-08-19T01:19:42.621Z"
+  }
 }
