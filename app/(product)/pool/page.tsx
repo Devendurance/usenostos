@@ -5,14 +5,31 @@ import { DataPanel, Metric, ProductGrid, ProductPage, StateNotice } from "@/comp
 import { PageHeading } from "@/components/ui/page-heading";
 import { StatusBadge } from "@/components/ui/status-badge";
 import { InstantPoolPanel } from "@/components/product/instant-pool-panel";
-import { deployedTestnet } from "@/lib/chain/deployed-addresses";
+import { InstantPoolP6Panel } from "@/components/product/instant-pool-p6-panel";
+import { deployedTestnet, selectInstantPoolSurface } from "@/lib/chain/deployed-addresses";
 
 export const metadata: Metadata = { title: "Instant pool", description: "Review the Nostos Instant liquidity pool interface and position controls." };
 
-const hasInstantPool = Boolean(deployedTestnet.p5?.instantPool);
+const poolSurface = selectInstantPoolSurface(deployedTestnet);
 
 export default function PoolPage() {
-  if (hasInstantPool) {
+  if (poolSurface === "p6") {
+    return (
+      <ProductPage>
+        <PageHeading
+          eyebrow="Nostos Instant"
+          title="Liquidity for a defined claim."
+          description="Permissionless LPs deposit Testnet USDT for nLP shares. The pool purchases eligible pending redemption claim tickets at disclosed terms using that LP capital, then harvests the full settlement when each claim becomes CLAIMABLE."
+          actions={<StatusBadge label="Public LP live" tone="neutral" icon={<Droplets size={14} aria-hidden="true" />} />}
+        />
+        <div className="mt-6">
+          <InstantPoolP6Panel />
+        </div>
+      </ProductPage>
+    );
+  }
+
+  if (poolSurface === "p5") {
     return (
       <ProductPage>
         <PageHeading

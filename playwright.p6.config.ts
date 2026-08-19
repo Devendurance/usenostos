@@ -1,5 +1,7 @@
 import { defineConfig, devices } from "@playwright/test";
 
+const baseURL = process.env.PLAYWRIGHT_P6_BASE_URL ?? process.env.PLAYWRIGHT_BASE_URL ?? "http://127.0.0.1:3000";
+
 export default defineConfig({
   testDir: "./tests/e2e",
   timeout: 30_000,
@@ -10,19 +12,19 @@ export default defineConfig({
   reporter: "list",
   projects: [
     {
-      name: "e2e",
-      testIgnore: /p6-.*\.spec\.ts/,
+      name: "e2e-p6",
+      testMatch: /p6-.*\.spec\.ts/,
     },
   ],
   use: {
-    baseURL: process.env.PLAYWRIGHT_BASE_URL ?? "http://127.0.0.1:3000",
+    baseURL,
     trace: "on-first-retry",
     ...devices["Desktop Chrome"],
   },
   webServer: {
     command: "npm run dev",
-    url: process.env.PLAYWRIGHT_BASE_URL ?? "http://127.0.0.1:3000",
-    reuseExistingServer: !process.env.CI,
+    url: baseURL,
+    reuseExistingServer: false,
     timeout: 120_000,
     env: {
       NEXT_PUBLIC_NOSTOS_E2E: "true",
@@ -30,8 +32,8 @@ export default defineConfig({
         asyncVault: "0x0000000000000000000000000000000000000101",
         redemptionTicket: "0x0000000000000000000000000000000000000202",
       }),
-      NEXT_PUBLIC_NOSTOS_E2E_P5_FIXTURE: JSON.stringify({
-        instantPool: "0x0000000000000000000000000000000000000303",
+      NEXT_PUBLIC_NOSTOS_E2E_P6_FIXTURE: JSON.stringify({
+        instantPool: "0x0000000000000000000000000000000000000404",
       }),
     },
   },

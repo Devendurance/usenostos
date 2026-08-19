@@ -52,3 +52,11 @@ const instantPoolArtifact = readOptionalArtifact(
 export const instantPoolAbi = instantPoolArtifact?.abi;
 export const instantPoolBytecode = instantPoolArtifact?.bytecode
   ?.object as `0x${string}` | undefined;
+
+const instantPoolP6Artifact = readOptionalArtifact(
+  "NostosInstantPoolP6.sol/NostosInstantPoolP6.json",
+);
+
+export const instantPoolP6Abi = instantPoolP6Artifact?.abi;
+export const instantPoolP6Bytecode = instantPoolP6Artifact?.bytecode
+  ?.object as `0x${string}` | undefined;
