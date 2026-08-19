@@ -53,7 +53,7 @@ export function MarketingHeader() {
           />
           <aside className={styles.mobileMenuPanel} aria-label="Mobile menu">
             <div className={styles.mobileMenuTopline}>
-              <span className="eyebrow text-muted-foreground">Nostos menu</span>
+              <BrandMark />
               <button
                 type="button"
                 className={styles.menuButton}

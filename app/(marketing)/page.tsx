@@ -6,6 +6,7 @@ import { Lifecycle } from "@/components/brand/lifecycle";
 import { AudienceGrid } from "@/components/brand/audience-grid";
 import { ObjectionFaq } from "@/components/brand/objection-faq";
 import { FinalCta } from "@/components/brand/final-cta";
+import { LandingReveal } from "@/components/brand/landing-reveal";
 
 export const metadata: Metadata = {
   title: "Capital on its way home",
@@ -16,12 +17,14 @@ export default function HomePage() {
   return (
     <>
       <MarketingHero />
-      <MessagePillars />
-      <PaperPeelFeature />
-      <Lifecycle />
-      <AudienceGrid />
-      <ObjectionFaq />
-      <FinalCta />
+      <LandingReveal>
+        <MessagePillars />
+        <PaperPeelFeature />
+        <Lifecycle />
+        <AudienceGrid />
+        <ObjectionFaq />
+        <FinalCta />
+      </LandingReveal>
     </>
   );
 }

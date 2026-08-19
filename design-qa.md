@@ -35,3 +35,21 @@ Checks completed:
 - The pre-footer Explore vaults action uses the same `hero` variant and twin-offset movement as the hero CTA while retaining its `/explore` destination. The fold CTA remains the documented compact black pill to `/how-it-works`.
 
 final result: passed
+
+## Landing reveal motion
+
+The landing page now uses a small client-only GSAP island to reveal the post-hero sections once as they enter the viewport. IntersectionObserver handles visibility decisions; GSAP animates only opacity and vertical transform, with no scroll polling or layout animation. Reduced-motion users receive the fully visible static layout, and product/interior routes do not mount the reveal scope.
+
+Focused browser checks passed for the landing-only scope and reduced-motion fallback.
+
+final result: passed
+
+## Supplied Nostos wordmark rollout
+
+Source: `C:\Users\USER\AppData\Local\Temp\codex-clipboard-ebe233c4-8e73-431d-abc3-de39487a3601.png`
+
+The supplied mark is cropped to transparent 1484 × 286 assets in `public/images/brand/` and is rendered through the shared `BrandMark` component. Light and dark variants are used in the marketing header, footer, product sidebar/mobile navigation, marketing drawer, and branded 404 surface.
+
+Desktop and mobile browser checks confirmed the mark remains crisp, readable, and contained without horizontal overflow. The footer uses the inverse treatment for contrast while preserving the lilac inner accent.
+
+final result: passed

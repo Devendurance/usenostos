@@ -17,7 +17,7 @@ export const metadata: Metadata = {
   title: { default: "Nostos — Capital on its way home", template: "%s — Nostos" },
   description: "Nostos is the redemption and settlement layer for tokenized real-world assets.",
   icons: {
-    icon: "/favicon.ico",
+    icon: "/icon.png",
   },
 };
 

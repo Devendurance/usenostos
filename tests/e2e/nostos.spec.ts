@@ -25,6 +25,23 @@ test.describe("Nostos route shells", () => {
     });
   }
 
+  test("uses the supplied wordmark across marketing, product, and 404 shells", async ({ page }) => {
+    await page.goto("/");
+    await expect(page.getByTestId("nostos-wordmark").first()).toBeVisible();
+    await expect(page.getByTestId("nostos-wordmark-dark")).toBeVisible();
+
+    await page.goto("/explore");
+    await expect(page.getByTestId("nostos-wordmark").first()).toBeVisible();
+
+    await page.goto("/vaults/not-an-address");
+    await expect(page.getByTestId("nostos-wordmark").first()).toBeVisible();
+  });
+
+  test("uses the supplied Nostos mark for the favicon", async ({ page }) => {
+    await page.goto("/");
+    await expect(page.locator('link[rel="icon"]').first()).toHaveAttribute("href", /icon\.png/);
+  });
+
   test("malformed vault paths render the branded 404", async ({ page }) => {
     await page.goto("/vaults/not-an-address");
     await expect(page.getByRole("heading", { name: /not on the map/i })).toBeVisible();
@@ -40,6 +57,23 @@ test.describe("Nostos route shells", () => {
     await expect(page.getByTestId("hero-primary-cta")).toHaveAttribute("href", "/explore");
     await expect(page.getByRole("link", { name: /How the exit works/i })).toHaveAttribute("href", "/how-it-works");
     await expect(page.getByTestId("hero-flow-scene")).not.toContainText(/0x|USDT|APY|tx/i);
+  });
+
+  test("landing-only section reveals respect reduced motion and stay out of product routes", async ({ page }) => {
+    await page.goto("/");
+    await expect(page.getByTestId("landing-reveal-scope")).toBeVisible();
+    await expect(page.locator('[data-testid="landing-reveal-scope"] > section')).toHaveCount(6);
+
+    await page.emulateMedia({ reducedMotion: "reduce" });
+    await page.reload();
+    const firstSectionOpacity = await page
+      .locator('[data-testid="landing-reveal-scope"] > section')
+      .first()
+      .evaluate((element) => getComputedStyle(element).opacity);
+    expect(firstSectionOpacity).toBe("1");
+
+    await page.goto("/explore");
+    await expect(page.getByTestId("landing-reveal-scope")).toHaveCount(0);
   });
 
   test("landing fold keeps truthful states and working CTAs", async ({ page }) => {
@@ -147,6 +181,7 @@ test.describe("Nostos route shells", () => {
     await page.goto("/");
     await page.getByRole("button", { name: /open navigation menu/i }).click();
     await expect(page.getByRole("navigation", { name: /mobile main navigation/i })).toBeVisible();
+    await expect(page.getByRole("complementary", { name: /mobile menu/i }).getByTestId("nostos-wordmark")).toBeVisible();
     await expect(page.getByRole("navigation", { name: /mobile main navigation/i }).getByRole("link", { name: /Explore/i })).toBeVisible();
     await page.getByRole("complementary", { name: /mobile menu/i }).getByRole("button", { name: /close navigation menu/i }).click();
     await expect(page.getByRole("navigation", { name: /mobile main navigation/i })).toBeHidden();
