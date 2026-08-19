@@ -18,5 +18,11 @@
     "redemptionTicketDeployedAt": "2026-08-19T01:19:34.356Z",
     "configureTx": "0x94d1f02afc94ec654a553fd5a8b422dd4e9d7b0b68ac7d5288a329af1ee44d9f",
     "configuredAt": "2026-08-19T01:19:42.621Z"
+  },
+  "p5": {
+    "instantPool": "0x2f18e935ca51729777503d4dba866a339f284472",
+    "instantPoolTx": "0x3af31b2fab884a09069e590985ea72889338797d84e2faec5b2b6f1edd83e0b7",
+    "instantPoolBlock": "20370664",
+    "instantPoolDeployedAt": "2026-08-19T04:21:14.102Z"
   }
 }
