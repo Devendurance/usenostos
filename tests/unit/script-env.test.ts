@@ -3,7 +3,10 @@ import { mkdtempSync, writeFileSync, rmSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { loadEnvFileIntoProcess } from "@/scripts/load-script-env";
-import { getTestnetPrivateKey } from "@/lib/chain/builder-wallet";
+import {
+  getTestnetPrivateKey,
+  getTestnetTreasuryPrivateKey,
+} from "@/lib/chain/builder-wallet";
 
 const TESTNET_KEY = `0x${"44".repeat(32)}`;
 const MAINNET_KEY = `0x${"11".repeat(32)}`;
@@ -36,6 +39,15 @@ describe("script environment loading", () => {
   it("never falls back to the Mainnet key for Testnet scripts", () => {
     expect(
       getTestnetPrivateKey({ BOT_BUILDER_PRIVATE_KEY: MAINNET_KEY }),
+    ).toBeNull();
+  });
+
+  it("never falls back to deployer or Mainnet keys for the treasury signer", () => {
+    expect(
+      getTestnetTreasuryPrivateKey({
+        BOT_TESTNET_PRIVATE_KEY: TESTNET_KEY,
+        BOT_BUILDER_PRIVATE_KEY: MAINNET_KEY,
+      }),
     ).toBeNull();
   });
 });

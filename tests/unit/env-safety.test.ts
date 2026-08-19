@@ -4,6 +4,7 @@ import { join } from "node:path";
 import {
   BUILDER_PRIVATE_KEY_ENV,
   BOT_TESTNET_PRIVATE_KEY_ENV,
+  BOT_TESTNET_TREASURY_PRIVATE_KEY_ENV,
   getBuilderWallet,
   getTestnetWallet,
 } from "@/lib/chain/builder-wallet";
@@ -32,10 +33,17 @@ describe("env and secret safety", () => {
     expect(BOT_TESTNET_PRIVATE_KEY_ENV.startsWith("NEXT_PUBLIC_")).toBe(false);
   });
 
+  it("does not expose the treasury private key env var through NEXT_PUBLIC_*", () => {
+    expect(BOT_TESTNET_TREASURY_PRIVATE_KEY_ENV.startsWith("NEXT_PUBLIC_")).toBe(
+      false,
+    );
+  });
+
   it("keeps server-only env names out of client code", () => {
     const secretNames = [
       BUILDER_PRIVATE_KEY_ENV,
       BOT_TESTNET_PRIVATE_KEY_ENV,
+      BOT_TESTNET_TREASURY_PRIVATE_KEY_ENV,
       P0_ENABLE_MAINNET_WRITE_ENV,
       P0_ENABLE_TESTNET_WRITE_ENV,
       P0_WRITE_TOKEN_ENV,

@@ -29,4 +29,5 @@ export const nostosInstantPoolP6Abi = parseAbi([
   "function redeem(uint256 shares, uint256 minAssetsOut) returns (uint256)",
   "function sellTicket(uint256 ticketId, uint256 minAmountOut) returns (uint256)",
   "function harvest(uint256 ticketId) returns (uint256)",
+  "function claimProtocolFees()",
 ]);
