@@ -1,7 +1,24 @@
 # Left Off
 
 ## Current Task
-P4 transferable redemption claim ticket implementation is complete and verified in the uncommitted working tree. P3 source/deployment/address history remains unchanged; no P4 deployment, registry write, settlement write, or P5 work was performed.
+P5 Nostos InstantPool Core is IMPLEMENTED and VERIFIED (uncommitted working tree; P4 already committed in `4673041`/`f6dcd1f`). No P5 deployment/funding/harvest performed; no transactions; `bot-testnet.json` has no `p5` key.
+
+## P5 Deliverables (all uncommitted)
+- `contracts/src/NostosInstantPool.sol` + `contracts/test/NostosInstantPool.t.sol` (32 forge tests; total 97 forge tests passing).
+- Tooling: `scripts/registry/p5-plan.ts`, `deploy-instant-pool.ts`, `fund-instant-pool.ts`, `harvest-instant-pool.ts`, `tests/unit/p5-plan.test.ts` (4 tests). All guarded by `P5_ENABLE_TESTNET_DEPLOY=true`; deploy verified DISABLED (exit 0) without opt-in; fund/harvest refuse (no persisted pool) with zero writes.
+- Frontend: `lib/contracts/nostos-instant-pool-abi.ts`, `lib/chain/instant-pool-hooks.ts`, `components/product/instant-pool-panel.tsx`, `app/(product)/pool/page.tsx` (live panel when persisted/fixture `p5.instantPool`, truthful placeholder fallback). Modified: `lib/chain/deployed-addresses.ts` (P5Deployment type + `p5` fixture), `package.json` (3 scripts), `playwright.config.ts` (`NEXT_PUBLIC_NOSTOS_E2E_P5_FIXTURE`), `scripts/registry/artifact.ts` (instantPool ABI/bytecode).
+- E2E: `tests/e2e/p5-rpc-fixture.ts` + `tests/e2e/p5-instant-pool.spec.ts` (4 tests).
+- Docs: spec + plan under `docs/superpowers/`.
+
+## Verification (fresh, 2026-08-19)
+- `npm test`: 118 vitest pass. `npx tsc --noEmit`: clean. `npm run lint`: clean. `rm -rf .next && npm run build`: clean (placeholder renders in production).
+- `npm run test:e2e`: 35/35 pass (fresh server; a stale reused `next dev` server caused transient failures until killed).
+- `forge build --root contracts`: clean (pre-existing OZ ERC4626 + P3 test warnings only). `forge test --root contracts -vv`: 97 pass. `forge fmt --check` on P5 files: clean.
+- `contracts/out` + `contracts/cache` restored to HEAD (no P5 artifacts left untracked).
+- P5 tuple returns mapped to objects in `instant-pool-hooks.ts` (wagmi returns arrays for tuple-returning reads).
+
+## Next Action
+Optional: review uncommitted P5 diff (`git diff`, untracked files) and commit when the user asks. Do not deploy/fund/harvest. P6 not started.
 
 ## P4 Design
 - Spec: `docs/superpowers/specs/2026-08-18-p4-transferable-redemption-claim-ticket-design.md`

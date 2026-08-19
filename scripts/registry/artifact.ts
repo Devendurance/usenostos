@@ -44,3 +44,11 @@ const redemptionTicketArtifact = readOptionalArtifact(
 export const redemptionTicketAbi = redemptionTicketArtifact?.abi;
 export const redemptionTicketBytecode = redemptionTicketArtifact?.bytecode
   ?.object as `0x${string}` | undefined;
+
+const instantPoolArtifact = readOptionalArtifact(
+  "NostosInstantPool.sol/NostosInstantPool.json",
+);
+
+export const instantPoolAbi = instantPoolArtifact?.abi;
+export const instantPoolBytecode = instantPoolArtifact?.bytecode
+  ?.object as `0x${string}` | undefined;

@@ -24,6 +24,9 @@ export default defineConfig({
         asyncVault: "0x0000000000000000000000000000000000000101",
         redemptionTicket: "0x0000000000000000000000000000000000000202",
       }),
+      NEXT_PUBLIC_NOSTOS_E2E_P5_FIXTURE: JSON.stringify({
+        instantPool: "0x0000000000000000000000000000000000000303",
+      }),
     },
   },
 });

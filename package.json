@@ -23,7 +23,10 @@
     "register:vault:testnet": "tsx scripts/registry/register-vault.ts",
     "deploy:vault:p4:testnet": "tsx scripts/registry/deploy-vault-p4.ts",
     "register:vault:p4:testnet": "tsx scripts/registry/register-vault-p4.ts",
-    "settle:request:p4:testnet": "tsx scripts/registry/settle-p4.ts"
+    "settle:request:p4:testnet": "tsx scripts/registry/settle-p4.ts",
+    "deploy:instant-pool:testnet": "tsx scripts/registry/deploy-instant-pool.ts",
+    "fund:instant-pool:testnet": "tsx scripts/registry/fund-instant-pool.ts",
+    "harvest:instant-pool:testnet": "tsx scripts/registry/harvest-instant-pool.ts"
   },
   "dependencies": {
     "@base-ui/react": "^1.7.0",
