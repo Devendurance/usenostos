@@ -24,5 +24,12 @@
     "instantPoolTx": "0x3af31b2fab884a09069e590985ea72889338797d84e2faec5b2b6f1edd83e0b7",
     "instantPoolBlock": "20370664",
     "instantPoolDeployedAt": "2026-08-19T04:21:14.102Z"
+  },
+  "p6": {
+    "instantPool": "0x0dcf185ab13144652c822b255d7155ebb8b64eb3",
+    "instantPoolTx": "0xe2f9728684203c938e039e0f12810e0fd3cc4e1a2f6b72424ec52aa47a277915",
+    "instantPoolBlock": "20396178",
+    "instantPoolDeployedAt": "2026-08-19T09:40:11.696Z",
+    "protocolTreasury": "0xC44685b7c78cC9C9b7f6623d7697Ac30ab0D6Dc9"
   }
 }
