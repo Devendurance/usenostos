@@ -8,6 +8,7 @@ import {
   getBuilderWallet,
   getTestnetWallet,
 } from "@/lib/chain/builder-wallet";
+import { COINMARKETCAP_API_KEY_ENV } from "@/lib/rwa/discovery/providers/cmc-client";
 import {
   P0_ENABLE_MAINNET_WRITE_ENV,
   P0_WRITE_TOKEN_ENV,
@@ -39,6 +40,11 @@ describe("env and secret safety", () => {
     );
   });
 
+  it("does not expose the CoinMarketCap API key env var through NEXT_PUBLIC_*", () => {
+    expect(COINMARKETCAP_API_KEY_ENV.startsWith("NEXT_PUBLIC_")).toBe(false);
+    expect(COINMARKETCAP_API_KEY_ENV).toBe("COINMARKETCAP_API_KEY");
+  });
+
   it("keeps server-only env names out of client code", () => {
     const secretNames = [
       BUILDER_PRIVATE_KEY_ENV,
@@ -47,6 +53,7 @@ describe("env and secret safety", () => {
       P0_ENABLE_MAINNET_WRITE_ENV,
       P0_ENABLE_TESTNET_WRITE_ENV,
       P0_WRITE_TOKEN_ENV,
+      COINMARKETCAP_API_KEY_ENV,
     ];
     const clientDirs = ["app", "components", "public"];
     const offenders: string[] = [];
@@ -71,6 +78,21 @@ describe("env and secret safety", () => {
     const wallet = getTestnetWallet({});
     expect(wallet.configured).toBe(false);
     expect(wallet.address).toBeNull();
+  });
+
+  it("keeps the CoinMarketCap HTTP client out of client components", () => {
+    const offenders: string[] = [];
+    for (const file of walk(join(process.cwd(), "components"))) {
+      const content = readFileSync(file, "utf8");
+      if (
+        /from ["']@\/lib\/rwa\/discovery\/providers\/(cmc-client|coinmarketcap)["']/.test(
+          content,
+        )
+      ) {
+        offenders.push(file);
+      }
+    }
+    expect(offenders).toEqual([]);
   });
 
   it("keeps server-only chain modules out of client code", () => {

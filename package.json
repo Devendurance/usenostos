@@ -29,7 +29,8 @@
     "fund:instant-pool:testnet": "tsx scripts/registry/fund-instant-pool.ts",
     "harvest:instant-pool:testnet": "tsx scripts/registry/harvest-instant-pool.ts",
     "harvest:instant-pool:p6:testnet": "tsx scripts/registry/harvest-instant-pool-p6.ts",
-    "claim:protocol-fees:p6:testnet": "tsx scripts/registry/claim-protocol-fees-p6.ts"
+    "claim:protocol-fees:p6:testnet": "tsx scripts/registry/claim-protocol-fees-p6.ts",
+    "doctor:cmc-rwa": "tsx scripts/doctor-cmc-rwa.ts"
   },
   "dependencies": {
     "@base-ui/react": "^1.7.0",

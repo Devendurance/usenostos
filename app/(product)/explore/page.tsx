@@ -4,7 +4,7 @@ import { ExplorerControls } from "@/components/product/explorer-controls";
 import { ProductPage, StateNotice } from "@/components/product/product-primitives";
 import { PageHeading } from "@/components/ui/page-heading";
 import { StatusBadge } from "@/components/ui/status-badge";
-import { listOpportunities } from "@/lib/rwa/opportunities";
+import { listCuratedCatalogAssets } from "@/lib/rwa/discovery/catalog";
 
 export const metadata: Metadata = {
   title: "Explore vaults",
@@ -13,7 +13,7 @@ export const metadata: Metadata = {
 };
 
 export default function ExplorePage() {
-  const opportunities = listOpportunities();
+  const initialItems = listCuratedCatalogAssets();
   return (
     <ProductPage>
       <PageHeading
@@ -22,7 +22,7 @@ export default function ExplorePage() {
         description="Compare selected RWA opportunities by their source-backed terms and integration status. Current APY, TVL, and NAV are shown only when a live source is available."
         actions={
           <StatusBadge
-            label={`${opportunities.length} in discovery`}
+            label="RWA discovery"
             tone="pending"
             icon={<Compass size={14} aria-hidden="true" />}
           />
@@ -35,7 +35,7 @@ export default function ExplorePage() {
         />
       </div>
       <div className="mt-6">
-        <ExplorerControls opportunities={opportunities} />
+        <ExplorerControls initialItems={initialItems} />
       </div>
     </ProductPage>
   );

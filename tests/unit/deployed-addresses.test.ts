@@ -55,6 +55,19 @@ describe("P6 deployed address fixtures", () => {
     expect(selectInstantPoolSurface({})).toBe("none");
   });
 
+  it("does not let persisted P6 override a P5-only e2e fixture", () => {
+    const merged = mergeDeployedTestnet(
+      {
+        p5: { instantPool: P5_POOL },
+        p6: { instantPool: "0x0dcf185ab13144652c822b255d7155ebb8b64eb3" },
+      },
+      { p5: { instantPool: P5_POOL } },
+    );
+    expect(merged.p5?.instantPool).toBe(P5_POOL);
+    expect(merged.p6).toBeUndefined();
+    expect(selectInstantPoolSurface(merged)).toBe("p5");
+  });
+
   it("still reads a P5 fixture when no P6 fixture is present", () => {
     expect(
       readE2eP5Fixture({

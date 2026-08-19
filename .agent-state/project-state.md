@@ -31,4 +31,4 @@
 - `.env` (gitignored) holds the testnet private key; the frontend never reads it (client-import safety test enforces this).
 
 ## Next
-P2 (not started).
+Sprint A CMC discovery is implemented (uncommitted): catalog merge of curated OUSG/TBILL/demo plus CoinMarketCap identity/quotes when a server key is present. Execution still DISCOVERY_ONLY for CMC/OUSG/TBILL.

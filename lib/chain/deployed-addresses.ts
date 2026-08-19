@@ -92,12 +92,19 @@ export function mergeDeployedTestnet(
   persisted: DeployedTestnetAddresses,
   fixtures: { p4?: P4Deployment; p5?: P5Deployment; p6?: P6Deployment },
 ): DeployedTestnetAddresses {
-  return {
+  const merged: DeployedTestnetAddresses = {
     ...persisted,
     ...(fixtures.p4 ? { p4: fixtures.p4 } : {}),
     ...(fixtures.p5 ? { p5: fixtures.p5 } : {}),
     ...(fixtures.p6 ? { p6: fixtures.p6 } : {}),
   };
+  // Default Playwright (P5 fixture, no P6 fixture) must not pick a persisted P6 pool.
+  if (fixtures.p5 && !fixtures.p6 && merged.p6) {
+    const rest = { ...merged };
+    delete rest.p6;
+    return rest;
+  }
+  return merged;
 }
 
 export function selectInstantPoolSurface(record: DeployedTestnetAddresses): InstantPoolSurface {
